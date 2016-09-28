@@ -13,12 +13,12 @@
         shape-rendering: crispEdges;
     }
 
-    button {
+/*    button {
         position: absolute;
         right: 20px;
         top: 440px;
         display: none;
-    }
+    }*/
 
     path.candle.body {
         stroke-width: 0;
@@ -77,7 +77,10 @@
 
 </style>
 <body>
-<button>Update</button>
+<button id="button" name="button">Update</button>
+<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://techanjs.org/techan.min.js"></script>
 <script>
 
 function chart(name, symbol, fullWidth, fullHeight) {
@@ -86,7 +89,8 @@ function chart(name, symbol, fullWidth, fullHeight) {
             height = fullHeight - margin.top - margin.bottom,
             volumeHeight = fullHeight*.25;
 
-    var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
+    var parseDate = d3.time.format("%d-%b-%y").parse;
+    //var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
 
     var x = techan.scale.financetime()
             .range([0, width]);
@@ -136,14 +140,14 @@ function chart(name, symbol, fullWidth, fullHeight) {
 
     var feed;
 
-    d3.csv('/datas/' + symbol + ".csv", function(error, data) {
+    d3.csv(symbol + ".csv", function(error, data) {
         var accessor = candlestick.accessor();
 
         feed = data.map(function(d) {
             // Open, high, low, close generally not required, is being used here to demonstrate colored volume
             // bars
             return {
-                date: parseIntradayDate(d.Date+"-2700"),
+                date: parseDate(d.Date),
                 volume: +d.Volume,
                 open: +d.Open,
                 high: +d.High,
@@ -174,17 +178,21 @@ function chart(name, symbol, fullWidth, fullHeight) {
                 .text("Ichimoku");
 
         // Data to display initially
-        draw(feed.slice(0, 163));
+        data = feed.slice(0, 130)
+        draw(data);
         // Only want this button to be active if the data has loaded
+        $('#button').click(
+
+          function() {
+
+            newdata = feed.slice(0,data.length);
+            feed.shift();
+            draw(newdata);
+
+        });        
     });
 
     function draw(data) {
-
-        newdata = feed.slice(0, data.length)
-
-        feed.shift();
-
-        d3.select("button").on("click", function() { draw(feed.slice(0, data.length))}).style("display", "inline");
 
         var ichimokuData = ichimokuIndicator(data);
         x.domain(data.map(ichimokuIndicator.accessor().d));
@@ -203,7 +211,7 @@ function chart(name, symbol, fullWidth, fullHeight) {
 
 }
 
-    chart("Facebook, Inc.", "data2", 600, 400);
-    chart("Google, Inc.", "data2", 600, 400);
+    chart("Facebook, Inc.", "FB", 600, 400);
+    chart("Google, Inc.", "GOOG", 600, 400);
 
 </script>
