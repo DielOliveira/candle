@@ -78,9 +78,9 @@
 </style>
 <body>
 <button id="button" name="button">Update</button>
-<script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://techanjs.org/techan.min.js"></script>
+<!-- <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="./techan/d3.v3.min.js"></script>
+<script src="./techan/techan.min.js"></script> -->
 <script>
 
 function chart(name, symbol, fullWidth, fullHeight) {
@@ -89,8 +89,8 @@ function chart(name, symbol, fullWidth, fullHeight) {
             height = fullHeight - margin.top - margin.bottom,
             volumeHeight = fullHeight*.25;
 
-    var parseDate = d3.time.format("%d-%b-%y").parse;
-    //var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
+    //var parseDate = d3.time.format("%d-%b-%y").parse;
+    var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
 
     var x = techan.scale.financetime()
             .range([0, width]);
@@ -147,7 +147,7 @@ function chart(name, symbol, fullWidth, fullHeight) {
             // Open, high, low, close generally not required, is being used here to demonstrate colored volume
             // bars
             return {
-                date: parseDate(d.Date),
+                date: parseIntradayDate(d.Date + '-2700'),
                 volume: +d.Volume,
                 open: +d.Open,
                 high: +d.High,
@@ -211,7 +211,7 @@ function chart(name, symbol, fullWidth, fullHeight) {
 
 }
 
-    chart("Facebook, Inc.", "FB", 600, 400);
-    chart("Google, Inc.", "GOOG", 600, 400);
+    chart("Facebook, Inc.", "data2", 600, 400);
+    chart("Google, Inc.", "data2", 600, 400);
 
 </script>
