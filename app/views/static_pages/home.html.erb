@@ -1,0 +1,350 @@
+
+<meta charset="utf-8">
+<style>
+
+    body {
+        font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+    path {
+        fill: none;
+        stroke-width: 1;
+    }
+
+    path.candle {
+        stroke: #000000;
+    }
+
+    path.candle.body {
+        stroke-width: 0;
+    }
+
+    path.candle.up {
+        fill: #00AA00;
+        stroke: #00AA00;
+    }
+
+    path.candle.down {
+        fill: #FF0000;
+        stroke: #FF0000;
+    }
+
+    .crosshair {
+        cursor: crosshair;
+    }
+
+    .crosshair path.wire {
+        stroke: #DDDDDD;
+        stroke-dasharray: 1, 1;
+    }
+
+    .crosshair .axisannotation path {
+        fill: #DDDDDD;
+    }
+
+    .ichimoku path {
+        fill: none;
+        stroke-width: 0.5;
+    }
+
+    .ichimoku path {
+        stroke: #000000;
+    }
+
+    .ichimoku path.chikouspan {
+        stroke: green;
+    }
+
+    .ichimoku path.tenkansen {
+        stroke: #0033FF;
+    }
+
+    .ichimoku path.kijunsen {
+        stroke: #FBB117;
+    }
+
+    .ichimoku path.kumo {
+        opacity: 0.1;
+    }
+
+    .ichimoku path.kumo.up {
+        fill: #00AA00;
+    }
+
+    .ichimoku path.kumo.down {
+        fill: #FF0000;
+    }
+
+    .ichimoku path.senkouspana {
+        stroke: #006600;
+    }
+
+    .ichimoku path.senkouspanb {
+        stroke: #FF0000;
+    }
+
+    path.tradearrow {
+        stroke: none;
+    }
+
+    path.tradearrow.buy {
+        fill: #0000FF;
+    }
+
+    path.tradearrow.buy-pending {
+        fill-opacity: 0.2;
+        stroke: #0000FF;
+        stroke-width: 1.5;
+    }
+
+    path.tradearrow.sell {
+        fill: #9900FF;
+    }
+
+    .tradearrow path.highlight {
+        fill: none;
+        stroke-width: 2;
+    }
+
+    .tradearrow path.highlight.buy,.tradearrow path.highlight.buy-pending {
+        stroke: #0000FF;
+    }
+
+    .tradearrow path.highlight.buy-pending {
+        fill: #0000FF;
+        fill-opacity: 0.3;
+    }
+
+    .tradearrow path.highlight.sell {
+        stroke: #9900FF;
+    }  
+
+</style>
+<body>
+<script>
+
+var count = 0;
+
+function chart(name, symbol, fullWidth, fullHeight) {
+    var margin = {top: 20, right: 30, bottom: 50, left: 30},
+            width = fullWidth - margin.left - margin.right,
+            height = fullHeight - margin.top - margin.bottom;
+
+    var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
+
+    var x = techan.scale.financetime()
+            .range([0, width]);
+
+    var y = d3.scale.linear()
+            .range([height, 0]);
+    //add
+    var candlestick = techan.plot.candlestick()
+            .xScale(x)
+            .yScale(y);
+
+    //add
+    var ichimoku = techan.plot.ichimoku()
+            .xScale(x)
+            .yScale(y);
+
+    var ohlc = techan.plot.ohlc()
+            .xScale(x)
+            .yScale(y);
+
+    var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left");
+
+    var timeAnnotation = techan.plot.axisannotation()
+            .axis(xAxis)
+            .format(d3.time.format('%H:%M'))
+            .width(65)
+            .translate([0, height]);
+
+    var ohlcAnnotation = techan.plot.axisannotation()
+            .axis(yAxis)
+            .format(d3.format(',.2fs'));
+
+
+    var crosshair = techan.plot.crosshair()
+            .xScale(x)
+            .yScale(y)
+            .xAnnotation(timeAnnotation)
+            .yAnnotation([ohlcAnnotation]);
+
+    var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var defs = svg.append("defs");
+
+    defs.append("clipPath")
+            .attr("id", "ohlcClip")
+        .append("rect")
+            .attr("x", 0)
+            .attr("y", 0)
+            .attr("width", width)
+            .attr("height", height);
+
+    svg = svg.append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    var ohlcSelection = svg.append("g")
+            .attr("class", "ohlc")
+            .attr("transform", "translate(0,0)");
+
+    ohlcSelection.append("g")
+            .attr("class", "candlestick")
+            .attr("clip-path", "url(#ohlcClip)");
+
+    ohlcSelection.append("g")
+            .attr("class", "indicator sma ma-0")
+            .attr("clip-path", "url(#ohlcClip)");
+
+    ohlcSelection.append("g")
+            .attr("class", "indicator sma ma-1")
+            .attr("clip-path", "url(#ohlcClip)");
+
+    svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")");
+
+    // svg.append('text')
+    //         .attr("class", "symbol")
+    //         .attr("x", 5)
+    //         .text(name + " (" + symbol + ")");            
+
+    svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")");
+
+    // svg.append("g")
+    //         .attr("class", "y axis")
+    //     .append("text")
+    //         .attr("transform", "rotate(-90)")
+    //         .attr("y", 6)
+    //         .attr("dy", ".71em")
+    //         .style("text-anchor", "end")
+    //         .text("Price ($)");
+
+    svg.append('g')
+            .attr("class", "crosshair ohlc");
+
+    var data, feed;
+
+    d3.csv('/datas/' + symbol + ".csv", function (error, csv) {
+         var accessor = candlestick.accessor(),
+                    ichimokuIndicator = techan.indicator.ichimoku(),
+                    indicatorPreRoll = ichimokuIndicator.kijunSen()+ichimokuIndicator.senkouSpanB();  // Don't show where indicators don't have data        
+
+        feed = csv.map(function(d) {
+            return {
+                date: parseIntradayDate(d.Date+"-2700"),
+                open: +d.Open,
+                high: +d.High,
+                low: +d.Low,
+                close: +d.Close,
+                volume: +d.Volume
+            };
+        }).sort(function(a, b) { return d3.ascending(accessor.d(a), accessor.d(b)); });
+
+        // The removed becomes the initial data, the remaining becomes the feed
+        data = feed.splice(0, 163);
+
+        svg.select("g.candlestick").datum(data);
+
+        //add
+        var ichimokuData = ichimokuIndicator(data);
+
+        y.domain(techan.scale.plot.ichimoku(ichimokuData.slice(indicatorPreRoll-ichimokuIndicator.kijunSen())).domain());
+
+        $('#button').click(
+
+          
+          function() {
+
+            if(feed.length) {
+                // Simulate a daily feed
+                data.push(feed.shift());
+            }
+
+            else {
+                // Simulate intra day updates when no feed is left
+                var last = data[data.length-1];
+                // Last must be between high and low
+                last.close = Math.round(((last.high - last.low)*Math.random())*1000)/1000+last.low;
+            	console.log(last.close);
+            }
+
+            redraw(data,ichimokuData,ichimokuIndicator,indicatorPreRoll);
+
+        }); 
+
+
+        redraw(data,ichimokuData,ichimokuIndicator,indicatorPreRoll);
+    });
+
+    function refreshIndicator(selection, indicator, data) {
+        var datum = selection.datum();
+        // Some trickery to remove old and insert new without changing array reference,
+        // so no need to update __data__ in the DOM
+        datum.splice.apply(datum, [0, datum.length].concat(data));
+        selection.call(indicator);
+    }
+
+    function redraw(data,ichimokuData,ichimokuIndicator,indicatorPreRoll) {
+        var accessor = ohlc.accessor();
+
+        var ichimokuData = ichimokuIndicator(data);
+        y.domain(techan.scale.plot.ichimoku(ichimokuData.slice(indicatorPreRoll-ichimokuIndicator.kijunSen())).domain());
+
+        x.domain(data.map(accessor.d));
+
+        var zoomable = x.zoomable().clamp(false);
+        zoomable.domain([data.length-54, data.length+ichimokuIndicator.kijunSen()]);
+
+        svg.select("g.candlestick").call(ohlc);
+
+        svg.select("g.crosshair.ohlc").call(crosshair);
+
+        //add
+       svg.append("g")
+                .datum(ichimokuData)
+                .attr("class", "ichimoku")
+                .attr("clip-path", "url(#clip)")
+                .call(ichimoku);
+
+		svg.select('g.x.axis').call(xAxis);
+        //svg.select('g.y.axis').call(yAxis);
+
+        // svg.append("g")
+        //         .attr("class", "x axis")
+        //         .attr("transform", "translate(0," + height + ")")
+        //         .call(xAxis);           
+
+        svg.select("g.candlestick").call(candlestick);
+
+        svg.select("g.crosshair.ohlc").call(crosshair);                
+
+
+    }
+}
+
+    chart("Doll 10", "data10", 670, 450);
+    chart("Doll 02", "data2", 670, 450);
+
+</script>
+<button id="button" onclick="d3.select('g.ichimoku').remove();d3.select('g.ichimoku').remove();count = count + 1;">Add point</button>
