@@ -77,20 +77,126 @@
 
 </style>
 <body>
+<div id="row">
+        <div class="col-md-5">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Gráfico 10</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Tenkan</td>
+                        <td>Kijun</td>
+                        <td>SenkouA</td>
+                        <td>SenkouB</td>
+                        <td>Chikou</td>
+                    </tr>
+                    <tr>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <div class="col-md-2">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Mercado</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Abertura</td>
+                        <td>Maxima</td>
+                        <td>Mínima</td>
+                        <td>Último</td>
+                    </tr>
+                    <tr>
+                        <td><label id="abertura" name="abertura"></label></td>
+                        <td><label id="maxima" name="maxima"></label></td>
+                        <td><label id="minima" name="minima"></label></td>
+                        <td><label id="fechamento" name="fechamento"></label></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <div class="col-md-5">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Gráfico 2</h3>
+
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div>
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Tenkan</td>
+                        <td>Kijun</td>
+                        <td>SenkouA</td>
+                        <td>SenkouB</td>
+                        <td>Chikou</td>
+                    </tr>
+                    <tr>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>                
+    </div>
 <button id="button" name="button">Update</button>
-<!-- <script src="../../plugins/jQuery/jquery-2.2.3.min.js"></script>
-<script src="./techan/d3.v3.min.js"></script>
-<script src="./techan/techan.min.js"></script> -->
 <script>
 
-function chart(name, symbol, fullWidth, fullHeight) {
+var count = 5;
+var fechamento;
+function chart(name, symbol, time, fullWidth, fullHeight, intra) {
     var margin = {top: 20, right: 30, bottom: 30, left: 30},
             width = fullWidth - margin.left - margin.right,
             height = fullHeight - margin.top - margin.bottom,
             volumeHeight = fullHeight*.25;
 
-    //var parseDate = d3.time.format("%d-%b-%y").parse;
-    var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
+    if (intra){
+
+        var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
+
+    }else{
+
+        var parseDate = d3.time.format("%d-%b-%y").parse;
+
+    }
 
     var x = techan.scale.financetime()
             .range([0, width]);
@@ -140,14 +246,14 @@ function chart(name, symbol, fullWidth, fullHeight) {
 
     var feed;
 
-    d3.csv(symbol + ".csv", function(error, data) {
+    d3.csv('datas/' + symbol + ".csv", function(error, data) {
         var accessor = candlestick.accessor();
 
         feed = data.map(function(d) {
             // Open, high, low, close generally not required, is being used here to demonstrate colored volume
             // bars
             return {
-                date: parseIntradayDate(d.Date + '-2700'),
+                date: parseIntradayDate(d.Date + '-0260'),
                 volume: +d.Volume,
                 open: +d.Open,
                 high: +d.High,
@@ -178,16 +284,43 @@ function chart(name, symbol, fullWidth, fullHeight) {
                 .text("Ichimoku");
 
         // Data to display initially
-        data = feed.slice(0, 130)
+        data = feed.slice(0, 163)
         draw(data);
         // Only want this button to be active if the data has loaded
         $('#button').click(
 
           function() {
 
-            newdata = feed.slice(0,data.length);
-            feed.shift();
-            draw(newdata);
+            if (time == 2){
+                feed.shift();
+                newdata = feed.slice(0,data.length);
+                fechamento = newdata[newdata.length-1].close;
+                console.log(newdata[newdata.length-1].date);
+                draw(newdata);
+            }
+
+            if (time == 10){
+                if (count == 5) {
+                    feed.shift();
+                    newdata = feed.slice(0,data.length);
+                    draw(newdata);
+                    count = 1;
+                } else {
+                    //newdata = feed.slice(0,data.length);
+                    //var last = newdata[newdata.length-1];
+
+                    // if (!fechamento) {
+
+                    //     fechamento = last.close;
+                    // }
+
+                    //last.close = fechamento;
+                    //draw(newdata);
+                    count = count + 1;
+
+                }
+            }
+
 
         });        
     });
@@ -211,7 +344,7 @@ function chart(name, symbol, fullWidth, fullHeight) {
 
 }
 
-    chart("Facebook, Inc.", "data2", 600, 400);
-    chart("Google, Inc.", "data2", 600, 400);
+    chart("Google, Inc.", "data10",10, 600, 400,true);
+    chart("Facebook, Inc.", "data2",2, 600, 400, true);
 
 </script>
