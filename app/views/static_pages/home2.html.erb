@@ -1,3 +1,6 @@
+<script src="/assets/template/d3.v3.min.js"></script>
+<script src="/assets/template/techan.min.js"></script>
+
 <!DOCTYPE html>
 <meta charset="utf-8">
 <style>
@@ -78,15 +81,15 @@
 </style>
 <body>
 <div id="row">
-        <div class="col-md-5">
+        <div class="col-md-4">
           <div class="box box-warning">
             <div class="box-header with-border">
               <h3 class="box-title">Gráfico 10</h3>
 
-              <div class="box-tools pull-right">
+<!--               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
-              </div>
+              </div> -->
               <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
@@ -104,6 +107,7 @@
                         <td><label id="" name=""></label></td>
                         <td><label id="" name=""></label></td>
                         <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
                     </tr>
                 </table>
             </div>
@@ -111,15 +115,15 @@
           </div>
           <!-- /.box -->
         </div>
-        <div class="col-md-2">
+        <div class="col-md-4">
           <div class="box box-warning">
             <div class="box-header with-border">
               <h3 class="box-title">Mercado</h3>
 
-              <div class="box-tools pull-right">
+<!--               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
-              </div>
+              </div> -->
               <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
@@ -130,12 +134,14 @@
                         <td>Maxima</td>
                         <td>Mínima</td>
                         <td>Último</td>
+                        <td>Hora</td>
                     </tr>
                     <tr>
                         <td><label id="abertura" name="abertura"></label></td>
                         <td><label id="maxima" name="maxima"></label></td>
                         <td><label id="minima" name="minima"></label></td>
-                        <td><label id="fechamento" name="fechamento"></label></td>
+                        <td><label id="ultimo" name="ultimo"></label></td>
+                        <td><label id="hora" name="hora"></label></td>
                     </tr>
                 </table>
             </div>
@@ -143,15 +149,15 @@
           </div>
           <!-- /.box -->
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
           <div class="box box-warning">
             <div class="box-header with-border">
               <h3 class="box-title">Gráfico 2</h3>
 
-              <div class="box-tools pull-right">
+<!--               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                 </button>
-              </div>
+              </div> -->
               <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
@@ -165,6 +171,7 @@
                         <td>Chikou</td>
                     </tr>
                     <tr>
+                        <td><label id="" name=""></label></td>
                         <td><label id="" name=""></label></td>
                         <td><label id="" name=""></label></td>
                         <td><label id="" name=""></label></td>
@@ -177,7 +184,101 @@
           <!-- /.box -->
         </div>                
     </div>
-<button id="button" name="button">Update</button>
+
+    <div class="col-md-12">
+        <div class="configdiv">
+        <div id="grafico" name="grafico"></div>
+        <div id="grafico2" name="grafico2"></div>
+        </div>
+    </div>
+
+
+<div class="container">
+    <div class="row">
+        <div  class="col-md-12">
+            <div  class="col-md-5">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Navegação</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div  class="col-md-12">
+                                <div  class="col-md-7">                    
+<!--                                   <a class="btn btn-app" onclick="javascript:push();">
+                                    <i class="fa fa-play"></i> Play
+                                  </a>
+                                  <a class="btn btn-app">
+                                    <i class="fa fa-pause"></i> Pause
+                                  </a> -->
+                                  <button id="button" name="button"  class="btn btn-block btn-success">Play</button>
+                                </div>
+                                <div  class="col-md-5">
+                                    <div class="form-group">
+                                        <label>
+                                          <input type="radio" name="r2" class="minimal-red" checked>
+                                          Manual
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                          <input type="radio" name="r2" class="minimal-red" checked>
+                                          1 Segundo
+                                        </label>
+                                    </div>                                    
+                                    <div class="form-group">
+                                        <label>
+                                          <input type="radio" name="r2" class="minimal-red" checked>
+                                          2 Segundo
+                                        </label>
+                                    </div> 
+                                </div>                                
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div  class="col-md-3">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Negociação</h3>
+                    </div>
+                    <div class="box-body">
+                      <button type="button" onclick="comprar();" class="btn btn-block btn-success">Comprar</button>
+                      <button type="button" onclick="vender();" class="btn btn-block btn-danger">Vender</button>
+                      <button type="button" onclick="vender();" class="btn btn-block btn-warning">Zerar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div  class="col-md-4">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Setup</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-4 control-label">Email</label>
+
+                          <div class="col-sm-8">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
+
+                          <div class="col-sm-8">
+                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
 <script>
 
 var count = 5;
@@ -221,7 +322,7 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
             .orient("left")
             .tickFormat(d3.format(",.3s"));
 
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#grafico").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
         .append("g")

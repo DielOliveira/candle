@@ -1,4 +1,8 @@
+<script src="/assets/template/d3.v3.min.js"></script>
+<script src="/assets/template/techan.min.js"></script>
+<script src="/assets/template/moment.js"></script>
 
+<!DOCTYPE html>
 <meta charset="utf-8">
 <style>
 
@@ -13,14 +17,12 @@
         shape-rendering: crispEdges;
     }
 
-    path {
-        fill: none;
-        stroke-width: 1;
-    }
-
-    path.candle {
-        stroke: #000000;
-    }
+/*    button {
+        position: absolute;
+        right: 20px;
+        top: 440px;
+        display: none;
+    }*/
 
     path.candle.body {
         stroke-width: 0;
@@ -36,22 +38,9 @@
         stroke: #FF0000;
     }
 
-    .crosshair {
-        cursor: crosshair;
-    }
-
-    .crosshair path.wire {
-        stroke: #DDDDDD;
-        stroke-dasharray: 1, 1;
-    }
-
-    .crosshair .axisannotation path {
-        fill: #DDDDDD;
-    }
-
     .ichimoku path {
         fill: none;
-        stroke-width: 0.5;
+        stroke-width: 0.8;
     }
 
     .ichimoku path {
@@ -59,7 +48,7 @@
     }
 
     .ichimoku path.chikouspan {
-        stroke: green;
+        stroke: #BF5FFF;
     }
 
     .ichimoku path.tenkansen {
@@ -90,71 +79,252 @@
         stroke: #FF0000;
     }
 
-    path.tradearrow {
-        stroke: none;
-    }
-
-    path.tradearrow.buy {
-        fill: #0000FF;
-    }
-
-    path.tradearrow.buy-pending {
-        fill-opacity: 0.2;
-        stroke: #0000FF;
-        stroke-width: 1.5;
-    }
-
-    path.tradearrow.sell {
-        fill: #9900FF;
-    }
-
-    .tradearrow path.highlight {
-        fill: none;
-        stroke-width: 2;
-    }
-
-    .tradearrow path.highlight.buy,.tradearrow path.highlight.buy-pending {
-        stroke: #0000FF;
-    }
-
-    .tradearrow path.highlight.buy-pending {
-        fill: #0000FF;
-        fill-opacity: 0.3;
-    }
-
-    .tradearrow path.highlight.sell {
-        stroke: #9900FF;
-    }  
-
 </style>
 <body>
+<div id="row">
+        <div class="col-md-4">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Gráfico 10</h3>
+
+<!--               <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div> -->
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Tenkan</td>
+                        <td>Kijun</td>
+                        <td>SenkouA</td>
+                        <td>SenkouB</td>
+                        <td>Chikou</td>
+                    </tr>
+                    <tr>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <div class="col-md-4">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Mercado</h3>
+
+<!--               <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div> -->
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Abertura</td>
+                        <td>Maxima</td>
+                        <td>Mínima</td>
+                        <td>Último</td>
+                        <td>Hora</td>
+                        <td>Candle</td>
+                        <td>Média 9</td>
+                    </tr>
+                    <tr>
+                        <td><label id="abertura" name="abertura"></label></td>
+                        <td><label id="maxima" name="maxima"></label></td>
+                        <td><label id="minima" name="minima"></label></td>
+                        <td><label id="ultimo" name="ultimo"></label></td>
+                        <td><label id="hora" name="hora"></label></td>
+                        <td><label id="candle" name="candle"></label></td>
+                        <td><label id="media9" name="media9"></label></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <div class="col-md-4">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Gráfico 2</h3>
+
+<!--               <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div> -->
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Tenkan</td>
+                        <td>Kijun</td>
+                        <td>SenkouA</td>
+                        <td>SenkouB</td>
+                        <td>Chikou</td>
+                    </tr>
+                    <tr>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                        <td><label id="" name=""></label></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>                
+    </div>
+
+    <div class="col-md-12">
+        <div class="configdiv">
+        <div id="grafico" name="grafico"></div>
+        <div id="grafico2" name="grafico2"></div>
+        </div>
+    </div>
+
+
+<div class="container">
+    <div class="row">
+        <div  class="col-md-12">
+            <div  class="col-md-5">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Navegação</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div  class="col-md-12">
+                                <div  class="col-md-7">                    
+<!--                                   <a class="btn btn-app" onclick="javascript:push();">
+                                    <i class="fa fa-play"></i> Play
+                                  </a>
+                                  <a class="btn btn-app">
+                                    <i class="fa fa-pause"></i> Pause
+                                  </a> -->
+                                  <button id="button" name="button"  class="btn btn-block btn-success">
+                                     <span class="fa fa-play"></span>  Play
+                                  </button>
+                                  <button id="buttonPause" name="buttonPause"  class="btn btn-block btn-warning">
+                                     <span class="fa fa-pause"></span>  Pause
+                                  </button>                                  
+                                </div>
+                                <div  class="col-md-5">
+                                    <div class="form-group">
+                                        <label>
+                                          <input type="radio" name="r2" class="minimal-red" checked>
+                                          Manual
+                                        </label>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>
+                                          <input type="radio" name="r2" class="minimal-red" checked>
+                                          1 Segundo
+                                        </label>
+                                    </div>                                    
+                                    <div class="form-group">
+                                        <label>
+                                          <input type="radio" name="r2" class="minimal-red" checked>
+                                          2 Segundo
+                                        </label>
+                                    </div> 
+                                </div>                                
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div  class="col-md-3">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Negociação</h3>
+                    </div>
+                    <div class="box-body">
+                      <button type="button" onclick="comprar();" class="btn btn-block btn-success">Comprar</button>
+                      <button type="button" onclick="vender();" class="btn btn-block btn-danger">Vender</button>
+                      <button type="button" onclick="vender();" class="btn btn-block btn-warning">Zerar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div  class="col-md-4">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Setup</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                          <label for="inputEmail3" class="col-sm-4 control-label">Email</label>
+
+                          <div class="col-sm-8">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputPassword3" class="col-sm-4 control-label">Password</label>
+
+                          <div class="col-sm-8">
+                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
 <script>
 
-var count = 0;
-
-function chart(name, symbol, fullWidth, fullHeight) {
-    var margin = {top: 20, right: 30, bottom: 50, left: 30},
+var count = 5;
+var fechamento;
+var maxima = 0;
+var minima = 100000000;
+var abertura = 0;
+var media = [];
+var intervalo;
+function chart(name, symbol, time, fullWidth, fullHeight, intra) {
+    var margin = {top: 20, right: 30, bottom: 30, left: 30},
             width = fullWidth - margin.left - margin.right,
-            height = fullHeight - margin.top - margin.bottom;
+            height = fullHeight - margin.top - margin.bottom,
+            volumeHeight = fullHeight*.25;
 
-    var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
+    if (intra){
+
+        var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
+
+    }else{
+
+        var parseDate = d3.time.format("%d-%b-%y").parse;
+
+    }
 
     var x = techan.scale.financetime()
             .range([0, width]);
 
     var y = d3.scale.linear()
             .range([height, 0]);
-    //add
+
     var candlestick = techan.plot.candlestick()
             .xScale(x)
             .yScale(y);
 
-    //add
     var ichimoku = techan.plot.ichimoku()
-            .xScale(x)
-            .yScale(y);
-
-    var ohlc = techan.plot.ohlc()
             .xScale(x)
             .yScale(y);
 
@@ -164,187 +334,159 @@ function chart(name, symbol, fullWidth, fullHeight) {
 
     var yAxis = d3.svg.axis()
             .scale(y)
-            .orient("left");
+            .orient("left")
+            .tickFormat(d3.format(",.3s"));
 
-    var timeAnnotation = techan.plot.axisannotation()
-            .axis(xAxis)
-            .format(d3.time.format('%H:%M'))
-            .width(65)
-            .translate([0, height]);
-
-    var ohlcAnnotation = techan.plot.axisannotation()
-            .axis(yAxis)
-            .format(d3.format(',.2fs'));
-
-
-    var crosshair = techan.plot.crosshair()
-            .xScale(x)
-            .yScale(y)
-            .xAnnotation(timeAnnotation)
-            .yAnnotation([ohlcAnnotation]);
-
-    var svg = d3.select("body").append("svg")
+    var svg = d3.select("#grafico").append("svg")
             .attr("width", width + margin.left + margin.right)
             .attr("height", height + margin.top + margin.bottom)
         .append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    var defs = svg.append("defs");
-
-    defs.append("clipPath")
-            .attr("id", "ohlcClip")
+    svg.append("clipPath")
+            .attr("id", "clip")
         .append("rect")
             .attr("x", 0)
-            .attr("y", 0)
+            .attr("y", y(1))
             .attr("width", width)
-            .attr("height", height);
+            .attr("height", y(0) - y(1));
 
-    svg = svg.append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    svg.append('text')
+            .attr("class", "symbol")
+            .attr("x", 5)
+            .text(name + " (" + symbol + ")");            
 
-    var ohlcSelection = svg.append("g")
-            .attr("class", "ohlc")
-            .attr("transform", "translate(0,0)");
+    var ichimokuIndicator = techan.indicator.ichimoku();
+    // Don't show where indicators don't have data
+    var indicatorPreRoll = ichimokuIndicator.kijunSen()+ichimokuIndicator.senkouSpanB();
 
-    ohlcSelection.append("g")
-            .attr("class", "candlestick")
-            .attr("clip-path", "url(#ohlcClip)");
+    var feed;
 
-    ohlcSelection.append("g")
-            .attr("class", "indicator sma ma-0")
-            .attr("clip-path", "url(#ohlcClip)");
+    d3.csv('datas/' + symbol + ".csv", function(error, data) {
+        var accessor = candlestick.accessor();
 
-    ohlcSelection.append("g")
-            .attr("class", "indicator sma ma-1")
-            .attr("clip-path", "url(#ohlcClip)");
-
-    svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")");
-
-    // svg.append('text')
-    //         .attr("class", "symbol")
-    //         .attr("x", 5)
-    //         .text(name + " (" + symbol + ")");            
-
-    svg.append("g")
-            .attr("class", "x axis")
-            .attr("transform", "translate(0," + height + ")");
-
-    // svg.append("g")
-    //         .attr("class", "y axis")
-    //     .append("text")
-    //         .attr("transform", "rotate(-90)")
-    //         .attr("y", 6)
-    //         .attr("dy", ".71em")
-    //         .style("text-anchor", "end")
-    //         .text("Price ($)");
-
-    svg.append('g')
-            .attr("class", "crosshair ohlc");
-
-    var data, feed;
-
-    d3.csv('/datas/' + symbol + ".csv", function (error, csv) {
-         var accessor = candlestick.accessor(),
-                    ichimokuIndicator = techan.indicator.ichimoku(),
-                    indicatorPreRoll = ichimokuIndicator.kijunSen()+ichimokuIndicator.senkouSpanB();  // Don't show where indicators don't have data        
-
-        feed = csv.map(function(d) {
+        feed = data.map(function(d) {
+            // Open, high, low, close generally not required, is being used here to demonstrate colored volume
+            // bars
             return {
-                date: parseIntradayDate(d.Date+"-2700"),
+                date: parseIntradayDate(d.Date + '-0260'),
+                volume: +d.Volume,
                 open: +d.Open,
                 high: +d.High,
                 low: +d.Low,
-                close: +d.Close,
-                volume: +d.Volume
+                close: +d.Close
             };
         }).sort(function(a, b) { return d3.ascending(accessor.d(a), accessor.d(b)); });
 
-        // The removed becomes the initial data, the remaining becomes the feed
-        data = feed.splice(0, 163);
+        svg.append("g")
+                .attr("class", "ichimoku")
+                .attr("clip-path", "url(#clip)");
 
-        svg.select("g.candlestick").datum(data);
+        svg.append("g")
+                .attr("class", "candlestick")
+                .attr("clip-path", "url(#clip)");
 
-        //add
-        var ichimokuData = ichimokuIndicator(data);
+        svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")");
 
-        y.domain(techan.scale.plot.ichimoku(ichimokuData.slice(indicatorPreRoll-ichimokuIndicator.kijunSen())).domain());
+        svg.append("g")
+                .attr("class", "y axis")
+            .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Ichimoku");
 
+        // Data to display initially
+        data = feed.slice(0, 163)
+        draw(data);
+        // Only want this button to be active if the data has loaded
         $('#button').click(
 
-          
           function() {
 
-            if(feed.length) {
-                // Simulate a daily feed
-                data.push(feed.shift());
+            if (time == 2){
+
+
+                feed.shift();
+                newdata = feed.slice(0,163);
+                hora = moment(newdata[newdata.length-1].date).format('hh:mm');
+                ultimo = newdata[newdata.length-1].close;
+
+                if (maxima < newdata[newdata.length-1].high){maxima = newdata[newdata.length-1].high;}
+                if (minima > newdata[newdata.length-1].low){minima = newdata[newdata.length-1].low;}
+                if (abertura == 0){abertura = abertura = data[data.length-1].open;}
+
+                $('#abertura').text(abertura);
+                $('#ultimo').text(ultimo);
+                $('#hora').text(hora);
+                $('#maxima').text(maxima);
+                $('#minima').text(minima);
+
+                media.push(Math.abs(newdata[newdata.length-1].open - newdata[newdata.length-1].close));
+
+                if (media.length > 9){
+                    media.shift();
+                }
+
+                mediaAtual = media[media.length-1]
+                mediaFinal = (media.reduce(function(previousValue, currentValue)  {  return previousValue + currentValue; }) / media.length).toFixed(2)                
+
+                $('#candle').text(mediaAtual);
+                $('#media9').text(mediaFinal);
+
+                fechamento = newdata[newdata.length-1].close;
+                draw(newdata);
             }
 
-            else {
-                // Simulate intra day updates when no feed is left
-                var last = data[data.length-1];
-                // Last must be between high and low
-                last.close = Math.round(((last.high - last.low)*Math.random())*1000)/1000+last.low;
-            	console.log(last.close);
+            if (time == 10){
+                if (count == 5) {
+                    feed.shift();
+                    newdata = feed.slice(0,163);
+                    draw(newdata);
+                    count = 1;
+                } else {
+                    //newdata = feed.slice(0,data.length);
+                    //var last = newdata[newdata.length-1];
+
+                    // if (!fechamento) {
+
+                    //     fechamento = last.close;
+                    // }
+
+                    //last.close = fechamento;
+                    //draw(newdata);
+                    count = count + 1;
+
+                }
             }
 
-            redraw(data,ichimokuData,ichimokuIndicator,indicatorPreRoll);
 
-        }); 
-
-
-        redraw(data,ichimokuData,ichimokuIndicator,indicatorPreRoll);
+        });        
     });
 
-    function refreshIndicator(selection, indicator, data) {
-        var datum = selection.datum();
-        // Some trickery to remove old and insert new without changing array reference,
-        // so no need to update __data__ in the DOM
-        datum.splice.apply(datum, [0, datum.length].concat(data));
-        selection.call(indicator);
-    }
-
-    function redraw(data,ichimokuData,ichimokuIndicator,indicatorPreRoll) {
-        var accessor = ohlc.accessor();
+    function draw(data) {
 
         var ichimokuData = ichimokuIndicator(data);
+        x.domain(data.map(ichimokuIndicator.accessor().d));
+        // Calculate the y domain for visible data points (ensure to include Kijun Sen additional data offset)
         y.domain(techan.scale.plot.ichimoku(ichimokuData.slice(indicatorPreRoll-ichimokuIndicator.kijunSen())).domain());
 
-        x.domain(data.map(accessor.d));
-
+        // Logic to ensure that at least +KijunSen displacement is applied to display cloud plotted ahead of ohlc
         var zoomable = x.zoomable().clamp(false);
-        zoomable.domain([data.length-54, data.length+ichimokuIndicator.kijunSen()]);
+        zoomable.domain([indicatorPreRoll, data.length+ichimokuIndicator.kijunSen()]);
 
-        svg.select("g.candlestick").call(ohlc);
-
-        svg.select("g.crosshair.ohlc").call(crosshair);
-
-        //add
-       svg.append("g")
-                .datum(ichimokuData)
-                .attr("class", "ichimoku")
-                .attr("clip-path", "url(#clip)")
-                .call(ichimoku);
-
-		svg.select('g.x.axis').call(xAxis);
-        //svg.select('g.y.axis').call(yAxis);
-
-        // svg.append("g")
-        //         .attr("class", "x axis")
-        //         .attr("transform", "translate(0," + height + ")")
-        //         .call(xAxis);           
-
-        svg.select("g.candlestick").call(candlestick);
-
-        svg.select("g.crosshair.ohlc").call(crosshair);                
-
-
+        svg.selectAll("g.candlestick").datum(data).call(candlestick);
+        svg.selectAll("g.ichimoku").datum(ichimokuData).call(ichimoku);
+        svg.selectAll("g.x.axis").call(xAxis);
+        svg.selectAll("g.y.axis").call(yAxis);
     }
+
 }
 
-    chart("Doll 10", "data10", 670, 450);
-    chart("Doll 02", "data2", 670, 450);
+    chart("Google, Inc.", "data10",10, 650, 330,true);
+    chart("Facebook, Inc.", "data2",2, 650, 330, true);
 
 </script>
-<button id="button" onclick="d3.select('g.ichimoku').remove();d3.select('g.ichimoku').remove();count = count + 1;">Add point</button>
