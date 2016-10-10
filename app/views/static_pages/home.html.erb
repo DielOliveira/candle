@@ -97,18 +97,18 @@
             <div class="box-body" style="display: block;">
                 <table class="table table-bordered table-hover">
                     <tr>
-                        <td>Tenkan</td>
+                        <td>Tekan</td>
                         <td>Kijun</td>
                         <td>SenkouA</td>
                         <td>SenkouB</td>
                         <td>Chikou</td>
                     </tr>
                     <tr>
-                        <td><label id="" name=""></label></td>
-                        <td><label id="" name=""></label></td>
-                        <td><label id="" name=""></label></td>
-                        <td><label id="" name=""></label></td>
-                        <td><label id="" name=""></label></td>
+                        <td><label id="Tekan10" name="Tekan10"></label></td>
+                        <td><label id="Kijun10" name="Kijun10"></label></td>
+                        <td><label id="SenkouA10" name="SenkouA10"></label></td>
+                        <td><label id="SenkouB10" name="SenkouB10"></label></td>
+                        <td><label id="Chikou10" name="Chikou10"></label></td>
                     </tr>
                 </table>
             </div>
@@ -169,18 +169,18 @@
             <div class="box-body" style="display: block;">
                 <table class="table table-bordered table-hover">
                     <tr>
-                        <td>Tenkan</td>
+                        <td>Tekan</td>
                         <td>Kijun</td>
                         <td>SenkouA</td>
                         <td>SenkouB</td>
                         <td>Chikou</td>
                     </tr>
                     <tr>
-                        <td><label id="" name=""></label></td>
-                        <td><label id="" name=""></label></td>
-                        <td><label id="" name=""></label></td>
-                        <td><label id="" name=""></label></td>
-                        <td><label id="" name=""></label></td>
+                        <td><label id="Tekan2" name="Tekan2"></label></td>
+                        <td><label id="Kijun2" name="Kijun2"></label></td>
+                        <td><label id="SenkouA2" name="SenkouA2"></label></td>
+                        <td><label id="SenkouB2" name="SenkouB2"></label></td>
+                        <td><label id="Chikou2" name="Chikou2"></label></td>
                     </tr>
                 </table>
             </div>
@@ -192,8 +192,8 @@
 
     <div class="col-md-12">
         <div class="configdiv">
-        <div id="grafico" name="grafico"></div>
-        <div id="grafico2" name="grafico2"></div>
+            <div id="grafico10" name="grafico10"></div>
+            <div id="grafico2" name="grafico2"></div>
         </div>
     </div>
 
@@ -337,11 +337,21 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
             .orient("left")
             .tickFormat(d3.format(",.3s"));
 
-    var svg = d3.select("#grafico").append("svg")
-            .attr("width", width + margin.left + margin.right)
-            .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    if (time == 10){
+        var svg = d3.select("#grafico10").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    } else {
+
+        var svg = d3.select("#grafico2").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    }
 
     svg.append("clipPath")
             .attr("id", "clip")
@@ -407,6 +417,7 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
 
           function() {
 
+            alert(time);
             if (time == 2){
 
 
@@ -425,6 +436,8 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
                 $('#maxima').text(maxima);
                 $('#minima').text(minima);
 
+                MediasIchimoku(newdata,2);
+
                 media.push(Math.abs(newdata[newdata.length-1].open - newdata[newdata.length-1].close));
 
                 if (media.length > 9){
@@ -441,26 +454,32 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
                 draw(newdata);
             }
 
+
             if (time == 10){
+
                 if (count == 5) {
                     feed.shift();
                     newdata = feed.slice(0,163);
                     draw(newdata);
                     count = 1;
                 } else {
-                    //newdata = feed.slice(0,data.length);
-                    //var last = newdata[newdata.length-1];
 
-                    // if (!fechamento) {
+                                        
+                    data = feed.slice(0,163)
+                    var last = data[data.length-1];
 
-                    //     fechamento = last.close;
-                    // }
 
-                    //last.close = fechamento;
-                    //draw(newdata);
+                    original = last.close
+                    last.close = fechamento;
+                    alert(fechamento);
+
+                    draw(data);
+                    //last.close = original;
                     count = count + 1;
 
                 }
+
+                MediasIchimoku(newdata,10);
             }
 
 
@@ -489,4 +508,118 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
     chart("Google, Inc.", "data10",10, 650, 330,true);
     chart("Facebook, Inc.", "data2",2, 650, 330, true);
 
+function MediasIchimoku(intervalo, grafico) {
+
+    // Médias Ichimoku
+        //Tekan-Sen
+        var noveH = 0;
+        var noveL = 100000000;
+        tekan = intervalo.slice(intervalo.length-9,intervalo.length)
+        for (var i  = 0; i < tekan.length; i++) {
+
+                if (tekan[i].high > noveH){
+                    noveH = tekan[i].high
+                }
+
+                if (tekan[i].low < noveL){
+                    noveL = tekan[i].low
+                }
+
+        }
+        tekanmedia = Math.ceil((noveH + noveL) / 2);
+
+        //Kijun-Sen
+        noveH = 0;
+        noveL = 100000000;             
+        kijun = intervalo.slice(intervalo.length-26,intervalo.length)
+        for (var i  = 0; i < kijun.length; i++) {
+
+                if (kijun[i].high > noveH){
+                    noveH = kijun[i].high
+                }
+
+                if (kijun[i].low < noveL){
+                    noveL = kijun[i].low
+                }
+
+        }
+        kijunmedia = Math.ceil((noveH + noveL) / 2);
+
+
+        //Senkou Span A
+        noveH = 0;
+        noveL = 100000000;        
+        tekan = intervalo.slice((intervalo.length-26)-9,intervalo.length-26)
+        for (var i  = 0; i < tekan.length; i++) {
+
+                if (tekan[i].high > noveH){
+                    noveH = tekan[i].high
+                }
+
+                if (tekan[i].low < noveL){
+                    noveL = tekan[i].low
+                }
+
+        }
+        tekanmedia26 = Math.ceil((noveH + noveL) / 2);
+
+        noveH = 0;
+        noveL = 100000000;     
+        kijun = intervalo.slice((intervalo.length-26)-26,intervalo.length-26)
+        for (var i  = 0; i < kijun.length; i++) {
+
+                if (kijun[i].high > noveH){
+                    noveH = kijun[i].high
+                }
+
+                if (kijun[i].low < noveL){
+                    noveL = kijun[i].low
+                }
+
+        }
+        kijunmedia26 = (noveH + noveL) / 2;        
+
+        senkouA = Math.ceil(((tekanmedia26 + kijunmedia26) / 2));
+        
+
+        //Senkou Span B
+
+        noveH = 0;
+        noveL = 100000000;     
+        kijun = intervalo.slice((intervalo.length-52)-26,intervalo.length-26)
+        for (var i  = 0; i < kijun.length; i++) {
+
+                if (kijun[i].high > noveH){
+                    noveH = kijun[i].high
+                }
+
+                if (kijun[i].low < noveL){
+                    noveL = kijun[i].low
+                }
+
+        }
+        senkouB = Math.ceil((noveH + noveL) / 2);
+
+        //chickou
+        chickou = intervalo[intervalo.length-1].close;
+        
+
+        if (grafico == 10){
+
+            $('#Tekan10').text(tekanmedia);
+            $('#Kijun10').text(kijunmedia);
+            $('#SenkouA10').text(senkouA);
+            $('#SenkouB10').text(senkouB);
+            $('#Chikou10').text(chickou);
+
+        } else {
+
+            $('#Tekan2').text(tekanmedia);
+            $('#Kijun2').text(kijunmedia);
+            $('#SenkouA2').text(senkouA);
+            $('#SenkouB2').text(senkouB);
+            $('#Chikou2').text(chickou);
+
+        }
+}
 </script>
