@@ -216,7 +216,7 @@
                                   <a class="btn btn-app">
                                     <i class="fa fa-pause"></i> Pause
                                   </a> -->
-                                  <button id="button" name="button"  class="btn btn-block btn-success">
+                                  <button id="button" name="button"  class="btn btn-block btn-success" onclick="g2();g10();">
                                      <span class="fa fa-play"></span>  Play
                                   </button>
                                   <button id="buttonPause" name="buttonPause"  class="btn btn-block btn-warning">
@@ -298,6 +298,10 @@ var minima = 100000000;
 var abertura = 0;
 var media = [];
 var intervalo;
+
+function g2(){};
+function g10(){};
+
 function chart(name, symbol, time, fullWidth, fullHeight, intra) {
     var margin = {top: 20, right: 30, bottom: 30, left: 30},
             width = fullWidth - margin.left - margin.right,
@@ -413,13 +417,13 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
         data = feed.slice(0, 163)
         draw(data);
         // Only want this button to be active if the data has loaded
-        $('#button').click(
+        //$('#button').click(
 
-          function() {
 
-            alert(time);
-            if (time == 2){
+        if (time == 2){
 
+
+            g2 =  function () {
 
                 feed.shift();
                 newdata = feed.slice(0,163);
@@ -452,10 +456,14 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
 
                 fechamento = newdata[newdata.length-1].close;
                 draw(newdata);
+
             }
+        }
 
 
-            if (time == 10){
+        if (time == 10){
+
+            g10 = function () {
 
                 if (count == 5) {
                     feed.shift();
@@ -480,10 +488,12 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
                 }
 
                 MediasIchimoku(newdata,10);
+
             }
+        }
 
 
-        });        
+        //);        
     });
 
     function draw(data) {
