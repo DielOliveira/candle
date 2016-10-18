@@ -271,10 +271,10 @@
                                 <td>Trades Realizados</td>
                             </tr>
                             <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td><label id="contratos"></label></td>
+                                <td><label id="resultado"></label></td>
+                                <td><label id="resultadoAcumulado"></label></td>
+                                <td><label id="tradesRealizados"></label></td>
                             </tr>
 
                         </table>
@@ -344,8 +344,19 @@ var intervalo;
 var trades = [];
 var dados;
 
+//Painel Mercado
+var ultimo;
+
+//Painel Carteira
+var contratos;
+var resultado;
+var resultadoAcumulado;
+var tradesRealizados;
+
+
 function g2(){};
 function g10(){};
+
 
 function chart(name, symbol, time, fullWidth, fullHeight, intra) {
     var margin = {top: 20, right: 30, bottom: 30, left: 30},
@@ -517,6 +528,7 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
 
                 fechamento = newdata[newdata.length-1].close;
                 draw(newdata,trades);
+                tradeControl();
 
             }
         }
@@ -718,33 +730,56 @@ function chart(name, symbol, time, fullWidth, fullHeight, intra) {
 function trade(type){
 
     if (trades.length % 2 == 0) {
-
         $("#comment").val("Abrindo posição");
-
-
     } else {
-
         $("#comment").val("Fechando posição");
         if (trades[trades.length-1].type == type){
             $("#comment").val("Faça uma posição inversa. Você já está posicionado neste sentido do mercado.");
             return
         }
-
-
     }
 
     if (type == "buy"){
-        trades.push({ date: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].date, type: "buy", price: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].low, quantity: 1000 })
+        trades.push({ date: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].date, type: "buy", price: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].low, quantity: 1000, price2:  dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].close})
         
     }
 
     if (type == "sell"){
-        trades.push({ date: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].date, type: "sell", price: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].high, quantity: 1000 })
+        trades.push({ date: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].date, type: "sell", price: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].high, quantity: 1000, price2:  dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].close })
         
     }
 
-    g2(true);g10();    
+    g2(true);g10();  
 }
+
+function tradeControl(){
+
+    if (trades.length % 2 == 0) {
+        //Posição Fechada
+        contratos = 0;
+        resultadoAcumulado = resultadoAcumulado + (resultado); 
+        resultado = 0;
+    } else {
+        //Posiçaõ Aberta
+        contratos = 5;
+        resultado = (trades[trades.length-1].price2 - ultimo) * 5 * 0.2;
+
+    }
+
+    tradesRealizados = trades.length;
+
+    $('#contratos').text(contratos);
+    $('#resultado').text(resultado);
+    $('#resultadoAcumulado').text(resultadoAcumulado);
+    $('#tradesRealizados').text(tradesRealizados);
+
+}
+/*
+var contratos;
+var resultado;
+var resultadoAcumulado;
+var tradesRealizados;
+*/
 
 
 </script>
