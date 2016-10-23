@@ -349,8 +349,8 @@ var ultimo;
 
 //Painel Carteira
 var contratos;
-var resultado;
-var resultadoAcumulado;
+var resultado = 0;
+var resultadoAcumulado = 0;
 var tradesRealizados;
 
 
@@ -757,12 +757,14 @@ function tradeControl(){
     if (trades.length % 2 == 0) {
         //Posição Fechada
         contratos = 0;
-        resultadoAcumulado = resultadoAcumulado + (resultado); 
+        resultadoAcumulado = resultadoAcumulado + resultado; 
         resultado = 0;
     } else {
         //Posiçaõ Aberta
         contratos = 5;
         resultado = (trades[trades.length-1].price2 - ultimo) * 5 * 0.2;
+
+        if (trades[trades.length-1].type == "buy"){resultado = resultado * -1}
 
     }
 
