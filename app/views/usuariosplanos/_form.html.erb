@@ -1,0 +1,41 @@
+<%= form_for(@usuariosplano) do |f| %>
+  <% if @usuariosplano.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@usuariosplano.errors.count, "error") %> prohibited this usuariosplano from being saved:</h2>
+
+      <ul>
+      <% @usuariosplano.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :plano_id %><br>
+    <%= f.text_field :plano_id %>
+  </div>
+  <div class="field">
+    <%= f.label :usuario_id %><br>
+    <%= f.text_field :usuario_id %>
+  </div>
+  <div class="field">
+    <%= f.label :datapagamento %><br>
+    <%= f.date_select :datapagamento %>
+  </div>
+  <div class="field">
+    <%= f.label :linhacodigopagamento %><br>
+    <%= f.text_field :linhacodigopagamento %>
+  </div>
+  <div class="field">
+    <%= f.label :observacao %><br>
+    <%= f.text_field :observacao %>
+  </div>
+  <div class="field">
+    <%= f.label :valid_at %><br>
+    <%= f.datetime_select :valid_at %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

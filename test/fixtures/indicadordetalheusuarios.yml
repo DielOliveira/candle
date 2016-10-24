@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  indicadorsetupdetalhe_id: 
+  indicadorsetup_id: 
+  valor: MyString
+
+two:
+  indicadorsetupdetalhe_id: 
+  indicadorsetup_id: 
+  valor: MyString

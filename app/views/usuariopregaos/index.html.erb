@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Usuariopregaos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Usuario</th>
+      <th>Pregoestitulo</th>
+      <th>Indicadorsetup</th>
+      <th>Checkpoint</th>
+      <th>Resultado</th>
+      <th>Flagfinalizado</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @usuariopregaos.each do |usuariopregao| %>
+      <tr>
+        <td><%= usuariopregao.usuario %></td>
+        <td><%= usuariopregao.pregoestitulo %></td>
+        <td><%= usuariopregao.indicadorsetup %></td>
+        <td><%= usuariopregao.checkpoint %></td>
+        <td><%= usuariopregao.resultado %></td>
+        <td><%= usuariopregao.flagfinalizado %></td>
+        <td><%= link_to 'Show', usuariopregao %></td>
+        <td><%= link_to 'Edit', edit_usuariopregao_path(usuariopregao) %></td>
+        <td><%= link_to 'Destroy', usuariopregao, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Usuariopregao', new_usuariopregao_path %>

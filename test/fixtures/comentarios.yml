@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  usuariopregao_id: 
+  descricao: MyString
+  horacomentario: 2016-10-24 15:08:06
+
+two:
+  usuariopregao_id: 
+  descricao: MyString
+  horacomentario: 2016-10-24 15:08:06

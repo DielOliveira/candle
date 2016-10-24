@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  email: MyString
+  senha: MyString
+  nomecompleto: MyString
+  datascimento: 2016-10-24
+  ultimologin: 2016-10-24 14:18:24
+  flagativo: false
+
+two:
+  email: MyString
+  senha: MyString
+  nomecompleto: MyString
+  datascimento: 2016-10-24
+  ultimologin: 2016-10-24 14:18:24
+  flagativo: false

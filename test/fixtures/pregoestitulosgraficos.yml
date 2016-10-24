@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pregoestitulo_id: 
+  arquivo_id: 
+  tempografico_id: 
+
+two:
+  pregoestitulo_id: 
+  arquivo_id: 
+  tempografico_id: 

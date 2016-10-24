@@ -1,0 +1,29 @@
+<%= form_for(@pregoestitulo) do |f| %>
+  <% if @pregoestitulo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pregoestitulo.errors.count, "error") %> prohibited this pregoestitulo from being saved:</h2>
+
+      <ul>
+      <% @pregoestitulo.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pregao_id %><br>
+    <%= f.text_field :pregao_id %>
+  </div>
+  <div class="field">
+    <%= f.label :titulo_id %><br>
+    <%= f.text_field :titulo_id %>
+  </div>
+  <div class="field">
+    <%= f.label :flagativo %><br>
+    <%= f.check_box :flagativo %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Pregao:</strong>
+  <%= @pregoestitulo.pregao %>
+</p>
+
+<p>
+  <strong>Titulo:</strong>
+  <%= @pregoestitulo.titulo %>
+</p>
+
+<p>
+  <strong>Flagativo:</strong>
+  <%= @pregoestitulo.flagativo %>
+</p>
+
+<%= link_to 'Edit', edit_pregoestitulo_path(@pregoestitulo) %> |
+<%= link_to 'Back', pregoestitulos_path %>

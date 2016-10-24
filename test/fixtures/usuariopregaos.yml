@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  usuario: MyString
+  pregoestitulo_id: 
+  indicadorsetup_id: 
+  checkpoint: 2016-10-24 15:05:24
+  resultado: 1.5
+  flagfinalizado: false
+
+two:
+  usuario: MyString
+  pregoestitulo_id: 
+  indicadorsetup_id: 
+  checkpoint: 2016-10-24 15:05:24
+  resultado: 1.5
+  flagfinalizado: false

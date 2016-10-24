@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Usuariopregao:</strong>
+  <%= @trade.usuariopregao %>
+</p>
+
+<p>
+  <strong>Horatrade:</strong>
+  <%= @trade.horatrade %>
+</p>
+
+<p>
+  <strong>Volume:</strong>
+  <%= @trade.volume %>
+</p>
+
+<p>
+  <strong>Operacao:</strong>
+  <%= @trade.operacao %>
+</p>
+
+<p>
+  <strong>Pontos:</strong>
+  <%= @trade.pontos %>
+</p>
+
+<%= link_to 'Edit', edit_trade_path(@trade) %> |
+<%= link_to 'Back', trades_path %>

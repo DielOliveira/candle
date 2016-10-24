@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pregoestitulos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pregao</th>
+      <th>Titulo</th>
+      <th>Flagativo</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pregoestitulos.each do |pregoestitulo| %>
+      <tr>
+        <td><%= pregoestitulo.pregao %></td>
+        <td><%= pregoestitulo.titulo %></td>
+        <td><%= pregoestitulo.flagativo %></td>
+        <td><%= link_to 'Show', pregoestitulo %></td>
+        <td><%= link_to 'Edit', edit_pregoestitulo_path(pregoestitulo) %></td>
+        <td><%= link_to 'Destroy', pregoestitulo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pregoestitulo', new_pregoestitulo_path %>

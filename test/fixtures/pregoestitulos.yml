@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pregao_id: 
+  titulo_id: 
+  flagativo: false
+
+two:
+  pregao_id: 
+  titulo_id: 
+  flagativo: false

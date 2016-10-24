@@ -1,0 +1,1 @@
+json.array! @indicadorsetups, partial: 'indicadorsetups/indicadorsetup', as: :indicadorsetup

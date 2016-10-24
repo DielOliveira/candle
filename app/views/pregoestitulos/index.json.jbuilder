@@ -1,0 +1,1 @@
+json.array! @pregoestitulos, partial: 'pregoestitulos/pregoestitulo', as: :pregoestitulo

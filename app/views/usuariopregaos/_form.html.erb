@@ -1,0 +1,41 @@
+<%= form_for(@usuariopregao) do |f| %>
+  <% if @usuariopregao.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@usuariopregao.errors.count, "error") %> prohibited this usuariopregao from being saved:</h2>
+
+      <ul>
+      <% @usuariopregao.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :usuario %><br>
+    <%= f.text_field :usuario %>
+  </div>
+  <div class="field">
+    <%= f.label :pregoestitulo_id %><br>
+    <%= f.text_field :pregoestitulo_id %>
+  </div>
+  <div class="field">
+    <%= f.label :indicadorsetup_id %><br>
+    <%= f.text_field :indicadorsetup_id %>
+  </div>
+  <div class="field">
+    <%= f.label :checkpoint %><br>
+    <%= f.datetime_select :checkpoint %>
+  </div>
+  <div class="field">
+    <%= f.label :resultado %><br>
+    <%= f.text_field :resultado %>
+  </div>
+  <div class="field">
+    <%= f.label :flagfinalizado %><br>
+    <%= f.check_box :flagfinalizado %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pregoestitulosgraficos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pregoestitulo</th>
+      <th>Arquivo</th>
+      <th>Tempografico</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pregoestitulosgraficos.each do |pregoestitulosgrafico| %>
+      <tr>
+        <td><%= pregoestitulosgrafico.pregoestitulo %></td>
+        <td><%= pregoestitulosgrafico.arquivo %></td>
+        <td><%= pregoestitulosgrafico.tempografico %></td>
+        <td><%= link_to 'Show', pregoestitulosgrafico %></td>
+        <td><%= link_to 'Edit', edit_pregoestitulosgrafico_path(pregoestitulosgrafico) %></td>
+        <td><%= link_to 'Destroy', pregoestitulosgrafico, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pregoestitulosgrafico', new_pregoestitulosgrafico_path %>

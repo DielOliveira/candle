@@ -1,0 +1,21 @@
+<%= form_for(@tempografico) do |f| %>
+  <% if @tempografico.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@tempografico.errors.count, "error") %> prohibited this tempografico from being saved:</h2>
+
+      <ul>
+      <% @tempografico.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :tempo %><br>
+    <%= f.text_field :tempo %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

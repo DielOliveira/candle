@@ -1,0 +1,29 @@
+<%= form_for(@pregoestitulosgrafico) do |f| %>
+  <% if @pregoestitulosgrafico.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@pregoestitulosgrafico.errors.count, "error") %> prohibited this pregoestitulosgrafico from being saved:</h2>
+
+      <ul>
+      <% @pregoestitulosgrafico.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :pregoestitulo_id %><br>
+    <%= f.text_field :pregoestitulo_id %>
+  </div>
+  <div class="field">
+    <%= f.label :arquivo_id %><br>
+    <%= f.text_field :arquivo_id %>
+  </div>
+  <div class="field">
+    <%= f.label :tempografico_id %><br>
+    <%= f.text_field :tempografico_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

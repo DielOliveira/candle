@@ -1,0 +1,1 @@
+json.partial! "pregoestitulosgraficos/pregoestitulosgrafico", pregoestitulosgrafico: @pregoestitulosgrafico

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  codigo: MyString
+  valortick: 9.99
+  flagativo: false
+
+two:
+  codigo: MyString
+  valortick: 9.99
+  flagativo: false

@@ -1,0 +1,1 @@
+json.array! @indicadordetalheusuarios, partial: 'indicadordetalheusuarios/indicadordetalheusuario', as: :indicadordetalheusuario

@@ -1,0 +1,2 @@
+json.extract! usuariosplano, :id, :plano_id, :usuario_id, :datapagamento, :linhacodigopagamento, :observacao, :valid_at, :created_at, :updated_at
+json.url usuariosplano_url(usuariosplano, format: :json)

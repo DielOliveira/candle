@@ -1,0 +1,1 @@
+json.array! @pregaos, partial: 'pregaos/pregao', as: :pregao

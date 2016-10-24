@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  descricao: MyString
+  diasvalidos: 1
+  valor: 9.99
+
+two:
+  descricao: MyString
+  diasvalidos: 1
+  valor: 9.99

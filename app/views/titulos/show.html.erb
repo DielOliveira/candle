@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Codigo:</strong>
+  <%= @titulo.codigo %>
+</p>
+
+<p>
+  <strong>Valortick:</strong>
+  <%= @titulo.valortick %>
+</p>
+
+<p>
+  <strong>Flagativo:</strong>
+  <%= @titulo.flagativo %>
+</p>
+
+<%= link_to 'Edit', edit_titulo_path(@titulo) %> |
+<%= link_to 'Back', titulos_path %>

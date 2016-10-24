@@ -1,0 +1,29 @@
+<%= form_for(@indicadorsetupdetalhe) do |f| %>
+  <% if @indicadorsetupdetalhe.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@indicadorsetupdetalhe.errors.count, "error") %> prohibited this indicadorsetupdetalhe from being saved:</h2>
+
+      <ul>
+      <% @indicadorsetupdetalhe.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :indicador_id %><br>
+    <%= f.text_field :indicador_id %>
+  </div>
+  <div class="field">
+    <%= f.label :descricao %><br>
+    <%= f.text_field :descricao %>
+  </div>
+  <div class="field">
+    <%= f.label :valordefault %><br>
+    <%= f.text_field :valordefault %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

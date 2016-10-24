@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pregaos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Data</th>
+      <th>Flagativo</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pregaos.each do |pregao| %>
+      <tr>
+        <td><%= pregao.data %></td>
+        <td><%= pregao.flagativo %></td>
+        <td><%= link_to 'Show', pregao %></td>
+        <td><%= link_to 'Edit', edit_pregao_path(pregao) %></td>
+        <td><%= link_to 'Destroy', pregao, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pregao', new_pregao_path %>

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Data:</strong>
+  <%= @pregao.data %>
+</p>
+
+<p>
+  <strong>Flagativo:</strong>
+  <%= @pregao.flagativo %>
+</p>
+
+<%= link_to 'Edit', edit_pregao_path(@pregao) %> |
+<%= link_to 'Back', pregaos_path %>

@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Plano:</strong>
+  <%= @usuariosplano.plano %>
+</p>
+
+<p>
+  <strong>Usuario:</strong>
+  <%= @usuariosplano.usuario %>
+</p>
+
+<p>
+  <strong>Datapagamento:</strong>
+  <%= @usuariosplano.datapagamento %>
+</p>
+
+<p>
+  <strong>Linhacodigopagamento:</strong>
+  <%= @usuariosplano.linhacodigopagamento %>
+</p>
+
+<p>
+  <strong>Observacao:</strong>
+  <%= @usuariosplano.observacao %>
+</p>
+
+<p>
+  <strong>Valid at:</strong>
+  <%= @usuariosplano.valid_at %>
+</p>
+
+<%= link_to 'Edit', edit_usuariosplano_path(@usuariosplano) %> |
+<%= link_to 'Back', usuariosplanos_path %>

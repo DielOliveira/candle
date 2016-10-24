@@ -1,0 +1,1 @@
+json.array! @tempograficos, partial: 'tempograficos/tempografico', as: :tempografico

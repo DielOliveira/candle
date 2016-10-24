@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  plano_id: 
+  usuario_id: 
+  datapagamento: 2016-10-24
+  linhacodigopagamento: MyString
+  observacao: MyString
+  valid_at: 2016-10-24 14:53:39
+
+two:
+  plano_id: 
+  usuario_id: 
+  datapagamento: 2016-10-24
+  linhacodigopagamento: MyString
+  observacao: MyString
+  valid_at: 2016-10-24 14:53:39

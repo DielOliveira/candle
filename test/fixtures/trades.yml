@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  usuariopregao_id: 
+  horatrade: 2016-10-24 15:12:02
+  volume: 9.99
+  operacao: MyString
+  pontos: 9.99
+
+two:
+  usuariopregao_id: 
+  horatrade: 2016-10-24 15:12:02
+  volume: 9.99
+  operacao: MyString
+  pontos: 9.99

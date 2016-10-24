@@ -1,4 +1,20 @@
 Rails.application.routes.draw do
+  resources :trades
+  resources :comentarios
+  resources :usuariopregaos
+  resources :pregoestitulosgraficos
+  resources :pregoestitulos
+  resources :indicadordetalheusuarios
+  resources :indicadorsetupdetalhes
+  resources :indicadorsetups
+  resources :usuariosplanos
+  resources :arquivos
+  resources :tempograficos
+  resources :titulos
+  resources :indicadors
+  resources :pregaos
+  resources :usuarios
+  resources :planos
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,1 @@
+json.partial! "indicadorsetups/indicadorsetup", indicadorsetup: @indicadorsetup

@@ -1,0 +1,2 @@
+module IndicadorsetupdetalhesHelper
+end
