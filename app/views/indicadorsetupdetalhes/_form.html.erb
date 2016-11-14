@@ -1,29 +1,38 @@
-<%= form_for(@indicadorsetupdetalhe) do |f| %>
-  <% if @indicadorsetupdetalhe.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@indicadorsetupdetalhe.errors.count, "error") %> prohibited this indicadorsetupdetalhe from being saved:</h2>
+  <%= form_for(@indicadorsetupdetalhe) do |f| %>
 
-      <ul>
-      <% @indicadorsetupdetalhe.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
-    </div>
+  <% if @indicadorsetupdetalhe.errors.any? %>
+  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+
+    <% if @indicadorsetupdetalhe.errors.any? %>
+
+    <% @indicadorsetupdetalhe.errors.full_messages.each do |msg| %>
+    <%= msg %></br>
+    <% end %>
+    <% end %>
+  </div>
+  <% end %> 
+
+    <div class="box box-info">
+      <div class="box-header with-border">
+      </div>
+
+      <div class="box-body">
+        <div class="form-group">
+          <%= f.label :Indicador %><br>
+          <%= f.select :indicador_id, options_from_collection_for_select(Indicador.all, 'id', 'indicador', @indicadorsetupdetalhe.indicador_id), {:include_blank => false}, {:class => 'form-control' } %>
+        </div>
+        <div class="form-group">
+          <%= f.label :Descricao %><br>
+          <%= f.text_field :descricao, :class => "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :Valor_Padrão %><br>
+          <%= f.text_field :valordefault, :class => "form-control" %>
+        </div>
+        <div class="box-footer">
+          <div class="btn-group pull-right">
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Salvar</button>
   <% end %>
 
-  <div class="field">
-    <%= f.label :indicador_id %><br>
-    <%= f.text_field :indicador_id %>
-  </div>
-  <div class="field">
-    <%= f.label :descricao %><br>
-    <%= f.text_field :descricao %>
-  </div>
-  <div class="field">
-    <%= f.label :valordefault %><br>
-    <%= f.text_field :valordefault %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+

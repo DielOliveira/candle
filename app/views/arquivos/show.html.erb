@@ -7,7 +7,9 @@
 
 <p>
   <strong>Caminho:</strong>
-  <%= @arquivo.caminho %>
+  	<a class="btn btn-info btn-sm" target="_blank" href="<%=@arquivo.caminho%>">
+	 Ver Comprovante
+	</a>  
 </p>
 
 <%= link_to 'Edit', edit_arquivo_path(@arquivo) %> |

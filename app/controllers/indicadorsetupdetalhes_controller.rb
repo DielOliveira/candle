@@ -26,9 +26,11 @@ class IndicadorsetupdetalhesController < ApplicationController
   def create
     @indicadorsetupdetalhe = Indicadorsetupdetalhe.new(indicadorsetupdetalhe_params)
 
+    @indicador = Indicador.find(@indicadorsetupdetalhe.indicador_id)
+
     respond_to do |format|
       if @indicadorsetupdetalhe.save
-        format.html { redirect_to @indicadorsetupdetalhe, notice: 'Indicadorsetupdetalhe was successfully created.' }
+        format.html { redirect_to @indicador, notice: 'Indicadorsetupdetalhe was successfully created.' }
         format.json { render :show, status: :created, location: @indicadorsetupdetalhe }
       else
         format.html { render :new }
@@ -54,9 +56,12 @@ class IndicadorsetupdetalhesController < ApplicationController
   # DELETE /indicadorsetupdetalhes/1
   # DELETE /indicadorsetupdetalhes/1.json
   def destroy
+
+    @indicador = Indicador.find(@indicadorsetupdetalhe.indicador_id)
+    
     @indicadorsetupdetalhe.destroy
     respond_to do |format|
-      format.html { redirect_to indicadorsetupdetalhes_url, notice: 'Indicadorsetupdetalhe was successfully destroyed.' }
+      format.html { redirect_to @indicador, notice: 'Indicadorsetupdetalhe was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

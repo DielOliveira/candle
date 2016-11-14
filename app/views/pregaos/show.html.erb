@@ -1,14 +1,40 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Data:</strong>
-  <%= @pregao.data %>
-</p>
+<div class="row">
+  <div class="col-md-12">
+	<% flash.each do |name, msg| -%>
+	<div class="alert alert-warning alert-dismissible fade in" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <%= msg%>
+	</div>      
+	<% end -%>
 
-<p>
-  <strong>Flagativo:</strong>
-  <%= @pregao.flagativo %>
-</p>
+    <div class="box box-info">
+      <div class="box-header with-border">
+        <h3 class="box-title">Exibindo Pregão</h3>
+      </div>
 
-<%= link_to 'Edit', edit_pregao_path(@pregao) %> |
-<%= link_to 'Back', pregaos_path %>
+      	<div class="box-body">
+			<p>
+			  <strong>Data:</strong>
+			  <%= showDate(@pregao.data,false) %>
+			</p>
+
+			<p>
+			  <strong>Ativo:</strong>
+			  <%= iconTrueOrFalse(@pregao.flagativo) %>
+			</p>
+		</div>
+
+        <div class="box-footer">
+			<div class="btn-group pull-right">
+				<%= link_to edit_pregao_path(@pregao), :class => "btn btn-warning" do %>
+					<i class="fa fa-edit"></i> Editar
+				<% end %>
+				<%= link_to pregaos_path, :class => "btn btn-danger" do %>
+					<i class="fa fa-arrow-left"></i> Voltar
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+</div>

@@ -1,29 +1,35 @@
-<%= form_for(@pregoestitulosgrafico) do |f| %>
+
+  <%= form_for(@pregoestitulosgrafico) do |f| %>
+
   <% if @pregoestitulosgrafico.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pregoestitulosgrafico.errors.count, "error") %> prohibited this pregoestitulosgrafico from being saved:</h2>
+  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 
-      <ul>
-      <% @pregoestitulosgrafico.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <% if @pregoestitulosgrafico.errors.any? %>
+
+    <% @pregoestitulosgrafico.errors.full_messages.each do |msg| %>
+    <%= msg %></br>
+    <% end %>
+    <% end %>
+  </div>
+  <% end %>   
+
+<div class="box-body">
+    <div class="form-group">
+      <%= f.hidden_field :pregoestitulo_id, :class => "form-control", :value => @pregoestitulo.id %>
     </div>
-  <% end %>
+    <div class="form-group">
+      <%= f.label :arquivo_id %>
+      <%= f.file_field :arquivo_id, :class => "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :Tempo_Gráfico %>
+      <%= f.select :tempografico_id, options_from_collection_for_select(Tempografico.all, 'id', 'tempo', @pregoestitulosgrafico.tempografico_id), {:include_blank => false}, {:class => 'form-control' } %>      
+    </div>
+  </div>
+  <!-- /.box-body -->
+  <div class="box-footer">
+    <button type="submit" class="btn btn-info pull-right">Salvar</button>
+  </div>
 
-  <div class="field">
-    <%= f.label :pregoestitulo_id %><br>
-    <%= f.text_field :pregoestitulo_id %>
-  </div>
-  <div class="field">
-    <%= f.label :arquivo_id %><br>
-    <%= f.text_field :arquivo_id %>
-  </div>
-  <div class="field">
-    <%= f.label :tempografico_id %><br>
-    <%= f.text_field :tempografico_id %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>

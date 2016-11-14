@@ -19,7 +19,11 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-   root 'static_pages#home'
+  root 'static_pages#home'
+  match '/training', to: 'static_pages#training', via: 'get'   
+  match '/login', to: 'static_pages#login', via: 'get'
+  match '/login', to: 'static_pages#login', via: 'post'
+  match '/logoff', to: 'static_pages#logoff', via: 'get'   
    #root 'static_pages#home2'
 
   # Example of regular route:

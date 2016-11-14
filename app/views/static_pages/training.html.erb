@@ -1,0 +1,790 @@
+<script src="/assets/template/d3.v3.min.js"></script>
+<script src="/assets/template/techan.min.js"></script>
+<script src="/assets/template/moment.js"></script>
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+    .training {
+        font: 10px sans-serif;
+    }
+
+    .axis path,
+    .axis line {
+        fill: none;
+        stroke: #000;
+        shape-rendering: crispEdges;
+    }
+
+/*    button {
+        position: absolute;
+        right: 20px;
+        top: 440px;
+        display: none;
+    }*/
+
+    path.candle.body {
+        stroke-width: 0;
+    }
+
+    path.candle.up {
+        fill: #00AA00;
+        stroke: #00AA00;
+    }
+
+    path.candle.down {
+        fill: #FF0000;
+        stroke: #FF0000;
+    }
+
+    .ichimoku path {
+        fill: none;
+        stroke-width: 0.8;
+    }
+
+    .ichimoku path {
+        stroke: #000000;
+    }
+
+    .ichimoku path.chikouspan {
+        stroke: #BF5FFF;
+    }
+
+    .ichimoku path.tenkansen {
+        stroke: #0033FF;
+    }
+
+    .ichimoku path.kijunsen {
+        stroke: #FBB117;
+    }
+
+    .ichimoku path.kumo {
+        opacity: 0.1;
+    }
+
+    .ichimoku path.kumo.up {
+        fill: #00AA00;
+    }
+
+    .ichimoku path.kumo.down {
+        fill: #FF0000;
+    }
+
+    .ichimoku path.senkouspana {
+        stroke: #006600;
+    }
+
+    .ichimoku path.senkouspanb {
+        stroke: #FF0000;
+    }
+
+    path.tradearrow {
+        stroke: none;
+    }
+
+    path.tradearrow.buy {
+        fill: #0000FF;
+    }
+
+    path.tradearrow.buy-pending {
+        fill-opacity: 0.2;
+        stroke: #0000FF;
+        stroke-width: 1.5;
+    }
+
+    path.tradearrow.sell {
+        fill: #9900FF;
+    }
+
+    .tradearrow path.highlight {
+        fill: none;
+        stroke-width: 2;
+    }
+
+    .tradearrow path.highlight.buy,.tradearrow path.highlight.buy-pending {
+        stroke: #0000FF;
+    }
+
+    .tradearrow path.highlight.buy-pending {
+        fill: #0000FF;
+        fill-opacity: 0.3;
+    }
+
+    .tradearrow path.highlight.sell {
+        stroke: #9900FF;
+    }    
+
+</style>
+<div id="training" class="training">
+<div id="row">
+        <div class="col-md-4">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Gráfico 10</h3>
+
+<!--               <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div> -->
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Tekan</td>
+                        <td>Kijun</td>
+                        <td>SenkouA</td>
+                        <td>SenkouB</td>
+                        <td>Chikou</td>
+                    </tr>
+                    <tr>
+                        <td><label id="Tekan10" name="Tekan10"></label></td>
+                        <td><label id="Kijun10" name="Kijun10"></label></td>
+                        <td><label id="SenkouA10" name="SenkouA10"></label></td>
+                        <td><label id="SenkouB10" name="SenkouB10"></label></td>
+                        <td><label id="Chikou10" name="Chikou10"></label></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <div class="col-md-4">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Mercado</h3>
+
+<!--               <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div> -->
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Abertura</td>
+                        <td>Maxima</td>
+                        <td>Mínima</td>
+                        <td>Último</td>
+                        <td>Hora</td>
+                        <td>Candle</td>
+                        <td>Média 9</td>
+                    </tr>
+                    <tr>
+                        <td><label id="abertura" name="abertura"></label></td>
+                        <td><label id="maxima" name="maxima"></label></td>
+                        <td><label id="minima" name="minima"></label></td>
+                        <td><label id="ultimo" name="ultimo"></label></td>
+                        <td><label id="hora" name="hora"></label></td>
+                        <td><label id="candle" name="candle"></label></td>
+                        <td><label id="media9" name="media9"></label></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>
+        <div class="col-md-4">
+          <div class="box box-warning">
+            <div class="box-header with-border">
+              <h3 class="box-title">Gráfico 2</h3>
+
+<!--               <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                </button>
+              </div> -->
+              <!-- /.box-tools -->
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body" style="display: block;">
+                <table class="table table-bordered table-hover">
+                    <tr>
+                        <td>Tekan</td>
+                        <td>Kijun</td>
+                        <td>SenkouA</td>
+                        <td>SenkouB</td>
+                        <td>Chikou</td>
+                    </tr>
+                    <tr>
+                        <td><label id="Tekan2" name="Tekan2"></label></td>
+                        <td><label id="Kijun2" name="Kijun2"></label></td>
+                        <td><label id="SenkouA2" name="SenkouA2"></label></td>
+                        <td><label id="SenkouB2" name="SenkouB2"></label></td>
+                        <td><label id="Chikou2" name="Chikou2"></label></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+        </div>                
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div id="grafico10" name="grafico10" style="border: solid 1px;"></div>
+        </div>
+        <div class="col-lg-6">
+            <div id="grafico2" name="grafico2" style="border: solid 1px;"></div>
+        </div>
+    </div>
+
+    <br>
+    <div id="row">
+            <div  class="col-md-3">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Mensagens</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                          <div class="col-sm-10">
+                            <textarea  class="form-control" rows="4" id="comment" name="comment"></textarea>
+                          </div>
+                          <div class="col-sm-2">
+                            <button type="button" class="btn btn-success" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span>
+                            </button>
+                            <button type="button" class="btn btn-danger" aria-label="Left Align">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </button>                            
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div  class="col-md-3">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Carteira</h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered table-hover">
+                            <tr>
+                                <td>Contratos</td>
+                                <td>Resultado</td>
+                                <td>Resultado Acumulado</td>
+                                <td>Trades Realizados</td>
+                            </tr>
+                            <tr>
+                                <td><label id="contratos"></label></td>
+                                <td><label id="resultado"></label></td>
+                                <td><label id="resultadoAcumulado"></label></td>
+                                <td><label id="tradesRealizados"></label></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>              
+            <div  class="col-md-2">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Negociação</h3>
+                    </div>
+                    <div class="box-body">
+                      <button type="button" onclick="trade('buy');" class="btn btn-block btn-success">Comprar</button>
+                      <button type="button" onclick="trade('sell');" class="btn btn-block btn-danger">Vender</button>
+                      <button type="button" onclick="trade('reset');" class="btn btn-block btn-warning">Zerar</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div  class="col-md-4">
+                <div class="box">
+                    <div class="box-header">
+                      <h3 class="box-title">Navegação</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="row">
+                            <div  class="col-md-12">
+                                <div  class="col-md-7">                    
+                                   <a class="btn btn-app" onclick="g2();g10();">
+                                    <i class="fa fa-play"></i> Play
+                                  </a>
+                                  <a class="btn btn-app">
+                                    <i class="fa fa-pause"></i> Pause
+                                  </a>
+                                  <!-- <button id="button" name="button"  class="btn btn-block btn-success" onclick="g2();g10();">
+                                     <span class="fa fa-play"></span>  Play
+                                  </button>
+                                  <button id="buttonPause" name="buttonPause"  class="btn btn-block btn-warning">
+                                     <span class="fa fa-pause"></span>  Pause
+                                  </button> -->                                  
+                                </div>
+                                <div  class="col-md-5">
+                                    <label>Atualização</label>
+                                    <select name="taxaAtualizacao" class="form-control">
+                                        <option>Manual</option>
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>5</option>
+                                    </select>
+                                </div>                                
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>          
+    </div>
+</div>
+<script>
+
+var count = 5;
+var fechamento;
+var maxima = 0;
+var minima = 100000000;
+var abertura = 0;
+var media = [];
+var intervalo;
+var trades = [];
+var dados;
+
+//Painel Mercado
+var ultimo;
+
+//Painel Carteira
+var contratos;
+var resultado = 0;
+var resultadoAcumulado = 0;
+var tradesRealizados;
+
+
+function g2(){};
+function g10(){};
+
+
+function chart(name, symbol, time, fullWidth, fullHeight, intra, div) {
+    var margin = {top: 10, right: 0, bottom: 0, left: 0},
+            width = fullWidth - margin.left - margin.right,
+            height = fullHeight - margin.top - margin.bottom,
+            volumeHeight = fullHeight*.25;
+
+    if (intra){
+
+        var parseIntradayDate = d3.time.format("%Y%m%d%H%M%Z").parse;
+
+    }else{
+
+        var parseDate = d3.time.format("%d-%b-%y").parse;
+
+    }
+
+    var x = techan.scale.financetime()
+            .range([0, width]);
+
+    var y = d3.scale.linear()
+            .range([height, 0]);
+
+    var candlestick = techan.plot.candlestick()
+            .xScale(x)
+            .yScale(y);
+
+    var ichimoku = techan.plot.ichimoku()
+            .xScale(x)
+            .yScale(y);
+
+    var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .tickFormat(d3.format(",.3s"));
+
+    // var valueText = svg.append('text')
+    //         .style("text-anchor", "end")
+    //         .attr("class", "coords")
+    //         .attr("x", width - 5)
+    //         .attr("y", 15);
+
+
+    var svg = d3.select(div).append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    svg.append("clipPath")
+            .attr("id", "clip")
+        .append("rect")
+            .attr("x", 0)
+            .attr("y", y(1))
+            .attr("width", width)
+            .attr("height", y(0) - y(1));
+
+    svg.append('text')
+            .attr("class", "symbol")
+            .attr("x", 5)
+            .text(name + " (" + symbol + ")");
+
+    var tradearrow = techan.plot.tradearrow()
+            .xScale(x)
+            .yScale(y)
+            .orient(function(d) { return d.type.startsWith("buy") ? "up" : "down"; })
+            .on("mouseenter", enter)
+            .on("mouseout", out);            
+
+    var ichimokuIndicator = techan.indicator.ichimoku();
+    // Don't show where indicators don't have data
+    var indicatorPreRoll = ichimokuIndicator.kijunSen()+ichimokuIndicator.senkouSpanB();
+
+    var feed;
+
+    d3.csv('datas/' + symbol + ".csv", function(error, data) {
+        var accessor = candlestick.accessor();
+
+        feed = data.map(function(d) {
+            // Open, high, low, close generally not required, is being used here to demonstrate colored volume
+            // bars
+            return {
+                date: parseIntradayDate(d.Date + '-0260'),
+                date2: +d.Date,
+                volume: +d.Volume,
+                open: +d.Open,
+                high: +d.High,
+                low: +d.Low,
+                close: +d.Close
+            };
+        }).sort(function(a, b) { return d3.ascending(accessor.d(a), accessor.d(b)); });
+
+
+        svg.append("g")
+                .attr("class", "tradearrow");
+
+        svg.append("g")
+                .attr("class", "ichimoku")
+                .attr("clip-path", "url(#clip)");
+
+        svg.append("g")
+                .attr("class", "candlestick")
+                .attr("clip-path", "url(#clip)");
+
+        svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")");
+
+        svg.append("g")
+                .attr("class", "y axis")
+            .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("");
+
+        // Data to display initially
+        data = feed.slice(0, 163)
+
+
+
+        if (time == 2){
+
+            // trades = [
+            //     { date: feed[feed.findIndex(x => x.date2 == 201603181728)].date, type: "buy", price: feed[feed.findIndex(x => x.date2 == 201603181728)].low, quantity: 1000 }
+
+            // ];
+
+
+            g2 =  function (negocia) {
+
+
+                if (negocia != true){
+                    feed.shift();
+                }
+                newdata = feed.slice(0,163);
+                dados = newdata;
+                hora = moment(newdata[newdata.length-1].date).format('hh:mm');
+                ultimo = newdata[newdata.length-1].close;
+
+                if (maxima < newdata[newdata.length-1].high){maxima = newdata[newdata.length-1].high;}
+                if (minima > newdata[newdata.length-1].low){minima = newdata[newdata.length-1].low;}
+                if (abertura == 0){abertura = abertura = data[data.length-1].open;}
+
+                $('#abertura').text(abertura);
+                $('#ultimo').text(ultimo);
+                $('#hora').text(hora);
+                $('#maxima').text(maxima);
+                $('#minima').text(minima);
+
+                MediasIchimoku(newdata,2);
+
+                media.push(Math.abs(newdata[newdata.length-1].open - newdata[newdata.length-1].close));
+
+                if (media.length > 9){
+                    media.shift();
+                }
+
+                mediaAtual = media[media.length-1]
+                mediaFinal = (media.reduce(function(previousValue, currentValue)  {  return previousValue + currentValue; }) / media.length).toFixed(2)                
+
+                $('#candle').text(mediaAtual);
+                $('#media9').text(mediaFinal);
+
+                fechamento = newdata[newdata.length-1].close;
+                draw(newdata,trades);
+                tradeControl();
+
+            }
+        }
+
+
+        if (time == 10){
+
+            g10 = function () {
+
+                if (count == 5) {
+                    feed.shift();
+                    newdata = feed.slice(0,163);
+                    
+                    var last = newdata[newdata.length-1];
+                    original = last.close
+                    last.close = fechamento;
+
+                    draw(newdata);
+                    count = 1;
+                } else {
+
+                                        
+                    data = feed.slice(0,163)
+                    var last = data[data.length-1];
+                    original = last.close
+                    last.close = fechamento;
+
+                    draw(data);
+                    //last.close = original;
+                    count = count + 1;
+
+                }
+
+                MediasIchimoku(newdata,10);
+
+            }
+        }
+
+
+        draw(data,trades);
+    });
+
+    function draw(data, trades) {
+
+        var ichimokuData = ichimokuIndicator(data);
+        x.domain(data.map(ichimokuIndicator.accessor().d));
+        // Calculate the y domain for visible data points (ensure to include Kijun Sen additional data offset)
+        y.domain(techan.scale.plot.ichimoku(ichimokuData.slice(indicatorPreRoll-ichimokuIndicator.kijunSen())).domain());
+
+        // Logic to ensure that at least +KijunSen displacement is applied to display cloud plotted ahead of ohlc
+        var zoomable = x.zoomable().clamp(false);
+        zoomable.domain([indicatorPreRoll, data.length+ichimokuIndicator.kijunSen()]);
+
+        svg.selectAll("g.candlestick").datum(data).call(candlestick);
+        svg.selectAll("g.ichimoku").datum(ichimokuData).call(ichimoku);
+
+        if (trades){
+            svg.selectAll("g.tradearrow").datum(trades).call(tradearrow);
+        }
+
+
+        // svg.selectAll("g.x.axis").call(xAxis);
+        // svg.selectAll("g.y.axis").call(yAxis);
+    }
+
+}
+
+    chart("Google, Inc.", "data10",10, 620, 330,true, "#grafico10");
+    chart("Facebook, Inc.", "data2",2, 620, 330, true, "#grafico2");
+
+    function enter(d) {
+        valueText.style("display", "inline");
+        refreshText(d);
+    }
+
+    function out() {
+        valueText.style("display", "none");
+    }
+
+    function refreshText(d) {
+        valueText.text("Trade: " + dateFormat(d.date) + ", " + d.type + ", " + valueFormat(d.price));
+    }
+
+    function MediasIchimoku(intervalo, grafico) {
+
+    // Médias Ichimoku
+        //Tekan-Sen
+        var noveH = 0;
+        var noveL = 100000000;
+        tekan = intervalo.slice(intervalo.length-9,intervalo.length)
+        for (var i  = 0; i < tekan.length; i++) {
+
+                if (tekan[i].high > noveH){
+                    noveH = tekan[i].high
+                }
+
+                if (tekan[i].low < noveL){
+                    noveL = tekan[i].low
+                }
+
+        }
+        tekanmedia = Math.ceil((noveH + noveL) / 2);
+
+        //Kijun-Sen
+        noveH = 0;
+        noveL = 100000000;             
+        kijun = intervalo.slice(intervalo.length-26,intervalo.length)
+        for (var i  = 0; i < kijun.length; i++) {
+
+                if (kijun[i].high > noveH){
+                    noveH = kijun[i].high
+                }
+
+                if (kijun[i].low < noveL){
+                    noveL = kijun[i].low
+                }
+
+        }
+        kijunmedia = Math.ceil((noveH + noveL) / 2);
+
+
+        //Senkou Span A
+        noveH = 0;
+        noveL = 100000000;        
+        tekan = intervalo.slice((intervalo.length-26)-9,intervalo.length-26)
+        for (var i  = 0; i < tekan.length; i++) {
+
+                if (tekan[i].high > noveH){
+                    noveH = tekan[i].high
+                }
+
+                if (tekan[i].low < noveL){
+                    noveL = tekan[i].low
+                }
+
+        }
+        tekanmedia26 = Math.ceil((noveH + noveL) / 2);
+
+        noveH = 0;
+        noveL = 100000000;     
+        kijun = intervalo.slice((intervalo.length-26)-26,intervalo.length-26)
+        for (var i  = 0; i < kijun.length; i++) {
+
+                if (kijun[i].high > noveH){
+                    noveH = kijun[i].high
+                }
+
+                if (kijun[i].low < noveL){
+                    noveL = kijun[i].low
+                }
+
+        }
+        kijunmedia26 = (noveH + noveL) / 2;        
+
+        senkouA = Math.ceil(((tekanmedia26 + kijunmedia26) / 2));
+        
+
+        //Senkou Span B
+
+        noveH = 0;
+        noveL = 100000000;     
+        kijun = intervalo.slice((intervalo.length-52)-26,intervalo.length-26)
+        for (var i  = 0; i < kijun.length; i++) {
+
+                if (kijun[i].high > noveH){
+                    noveH = kijun[i].high
+                }
+
+                if (kijun[i].low < noveL){
+                    noveL = kijun[i].low
+                }
+
+        }
+        senkouB = Math.ceil((noveH + noveL) / 2);
+
+        //chickou
+        chickou = intervalo[intervalo.length-1].close;
+        
+
+        if (grafico == 10){
+
+            $('#Tekan10').text(tekanmedia);
+            $('#Kijun10').text(kijunmedia);
+            $('#SenkouA10').text(senkouA);
+            $('#SenkouB10').text(senkouB);
+            $('#Chikou10').text(chickou);
+
+        } else {
+
+            $('#Tekan2').text(tekanmedia);
+            $('#Kijun2').text(kijunmedia);
+            $('#SenkouA2').text(senkouA);
+            $('#SenkouB2').text(senkouB);
+            $('#Chikou2').text(chickou);
+
+        }
+}
+
+function trade(type){
+
+    if (trades.length % 2 == 0) {
+        $("#comment").val("Abrindo posição");
+    } else {
+        $("#comment").val("Fechando posição");
+        if (trades[trades.length-1].type == type){
+            $("#comment").val("Faça uma posição inversa. Você já está posicionado neste sentido do mercado.");
+            return
+        }
+    }
+
+    if (type == "buy"){
+        trades.push({ date: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].date, type: "buy", price: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].low, quantity: 1000, price2:  dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].close})
+        
+    }
+
+    if (type == "sell"){
+        trades.push({ date: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].date, type: "sell", price: dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].high, quantity: 1000, price2:  dados[dados.findIndex(x => x.date2 == dados[dados.length-1].date2)].close })
+        
+    }
+
+    g2(true);g10();  
+}
+
+function tradeControl(){
+
+    if (trades.length % 2 == 0) {
+        //Posição Fechada
+        contratos = 0;
+        resultadoAcumulado = resultadoAcumulado + resultado; 
+        resultado = 0;
+    } else {
+        //Posiçaõ Aberta
+        contratos = 5;
+        resultado = (trades[trades.length-1].price2 - ultimo) * 5 * 0.2;
+
+        if (trades[trades.length-1].type == "buy"){resultado = resultado * -1}
+
+    }
+
+    tradesRealizados = trades.length;
+
+    $('#contratos').text(contratos);
+    $('#resultado').text(resultado);
+    $('#resultadoAcumulado').text(resultadoAcumulado);
+    $('#tradesRealizados').text(tradesRealizados);
+
+}
+/*
+var contratos;
+var resultado;
+var resultadoAcumulado;
+var tradesRealizados;
+*/
+
+
+</script>

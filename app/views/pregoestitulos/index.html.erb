@@ -1,31 +1,59 @@
-<p id="notice"><%= notice %></p>
+<%content_for :head do%>
+  Listando Pregões
+<%end%>
 
-<h1>Listing Pregoestitulos</h1>
+  <% flash.each do |name, msg| -%>
+  <div class="alert alert-warning alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <%= msg%>
+  </div>      
+  <% end -%>
 
-<table>
-  <thead>
-    <tr>
-      <th>Pregao</th>
-      <th>Titulo</th>
-      <th>Flagativo</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+  <div class="box box-info">
+    <div class="box-header with-border">
+    </div>
 
-  <tbody>
-    <% @pregoestitulos.each do |pregoestitulo| %>
-      <tr>
-        <td><%= pregoestitulo.pregao %></td>
-        <td><%= pregoestitulo.titulo %></td>
-        <td><%= pregoestitulo.flagativo %></td>
-        <td><%= link_to 'Show', pregoestitulo %></td>
-        <td><%= link_to 'Edit', edit_pregoestitulo_path(pregoestitulo) %></td>
-        <td><%= link_to 'Destroy', pregoestitulo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Pregão</th>
+            <th>Título</th>
+            <th>Ativo</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
 
-<br>
+        <tbody>
+          <% @pregoestitulos.each do |pregoestitulo| %>
+            <tr>
+              <td><%= showDate(pregoestitulo.pregao.data,false) rescue nil %></td>
+              <td><%= pregoestitulo.titulo.codigo %></td>
+              <td><%= iconTrueOrFalse(pregoestitulo.flagativo) %></td>
 
-<%= link_to 'New Pregoestitulo', new_pregoestitulo_path %>
+              <td>
+                <div class="btn-group pull-right">
+                  <%= link_to edit_pregoestitulo_path(pregoestitulo), :class => "btn btn-default" do %>
+                    <i class="fa fa-edit"></i> Editar
+                  <% end %>
+                  <%= link_to pregoestitulo, :class => "btn btn-default" do %>
+                    <i class="fa fa-list-alt"></i> Exibir
+                  <% end %>                  
+                  <%= link_to raw("<i class=\"fa fa-trash\"></i> Excluir"), 
+                    pregoestitulo_path(:id => pregoestitulo.id),
+                    class: "btn btn-default",
+                    method: :delete %>  
+
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <br>
+      <div class="box-footer">
+        <%= link_to new_pregoestitulo_path, :class => "btn btn-success pull-right" do %>
+        <span class="glyphicon glyphicon-file"></span> Novo
+        <% end %>      
+      </div>      
+
+  </div>

@@ -1,6 +1,17 @@
-<h1>Editing Pregao</h1>
+						<%= render 'form' %>
 
-<%= render 'form' %>
+						<%= link_to @pregao, :class => "btn btn-info" do %>
+							<i class="fa fa-list-alt"></i> Exibir
+						<% end %>
 
-<%= link_to 'Show', @pregao %> |
-<%= link_to 'Back', pregaos_path %>
+						<%= link_to pregaos_path, :class => "btn btn-danger" do %>
+							<i class="fa fa-arrow-left"></i> Voltar
+						<% end %>						
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+

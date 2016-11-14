@@ -10,6 +10,8 @@ class IndicadorsController < ApplicationController
   # GET /indicadors/1
   # GET /indicadors/1.json
   def show
+    @indicadorsetupdetalhes = Indicadorsetupdetalhe.all
+    @indicadorsetupdetalhe = Indicadorsetupdetalhe.new
   end
 
   # GET /indicadors/new

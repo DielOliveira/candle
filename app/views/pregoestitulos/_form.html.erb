@@ -1,29 +1,59 @@
-<%= form_for(@pregoestitulo) do |f| %>
+
+  <%= form_for(@pregoestitulo) do |f| %>
+
   <% if @pregoestitulo.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@pregoestitulo.errors.count, "error") %> prohibited this pregoestitulo from being saved:</h2>
+  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 
-      <ul>
-      <% @pregoestitulo.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+    <% if @pregoestitulo.errors.any? %>
+
+    <% @pregoestitulo.errors.full_messages.each do |msg| %>
+    <%= msg %></br>
+    <% end %>
+    <% end %>
+  </div>
+  <% end %> 
+
+    <div class="box box-info">
+      <div class="box-header with-border">
+      </div>
+
+      <div class="box-body">
+        <div class="form-group">
+          <label>Data Pregão:</label>
+
+          <div class="input-group date">
+            <div class="input-group-addon">
+              <i class="fa fa-calendar"></i>
+            </div>
+            <input type="text" class="form-control pull-right" id="pregoestitulo_date" name="pregoestitulo[date]" value="<%=showDate(@pregoestitulo.pregao.data,false) rescue nil%>">
+          </div>
+          <!-- /.input group -->
+        </div>
+        <div class="field">
+          <%= f.label :titulo_id %><br>
+          <%= f.select :titulo_id, options_from_collection_for_select(Titulo.all, 'id', 'codigo', @pregoestitulo.titulo_id), {:include_blank => false}, {:class => 'form-control' } %>
+        </div>
+        <br>
+        <div class="field">
+          <%= f.label :flagativo %><br>
+          <%= f.check_box :flagativo %>
+        </div>
+        <div class="box-footer">
+          <div class="btn-group pull-right">
+            <button type="submit" class="btn btn-success"><i class="fa fa-save"></i> Salvar</button>        
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :pregao_id %><br>
-    <%= f.text_field :pregao_id %>
-  </div>
-  <div class="field">
-    <%= f.label :titulo_id %><br>
-    <%= f.text_field :titulo_id %>
-  </div>
-  <div class="field">
-    <%= f.label :flagativo %><br>
-    <%= f.check_box :flagativo %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+
+<script>
+  $(function () {
+    //Initialize Select2 Elements
+    
+    $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+    //Date picker
+    $('#pregoestitulo_date').datepicker({
+      autoclose: true
+    });
+
+  });
+</script>

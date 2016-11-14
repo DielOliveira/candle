@@ -1,6 +1,14 @@
-<h1>Editing Pregoestitulo</h1>
+<%content_for :head do%>
+  Editando Pregão
+<%end%>
 
-<%= render 'form' %>
+				<%= render 'form' %>
 
-<%= link_to 'Show', @pregoestitulo %> |
-<%= link_to 'Back', pregoestitulos_path %>
+				<%= link_to pregoestitulos_path, :class => "btn btn-danger" do %>
+					<i class="fa fa-arrow-left"></i> Voltar
+				<% end %>						
+
+			</div>
+		</div>
+	</div>
+</div>

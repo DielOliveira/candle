@@ -1,4 +1,4 @@
-<%= form_for(@arquivo) do |f| %>
+<%= form_for @arquivo, html: { multipart: true } do |f| %>
   <% if @arquivo.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@arquivo.errors.count, "error") %> prohibited this arquivo from being saved:</h2>
@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :caminho %><br>
-    <%= f.text_field :caminho %>
+    <%= f.file_field :caminho %>
   </div>
   <div class="actions">
     <%= f.submit %>

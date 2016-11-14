@@ -1,41 +1,54 @@
-<%= form_for(@usuario) do |f| %>
+
+  <%= form_for(@usuario) do |f| %>
+
   <% if @usuario.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@usuario.errors.count, "error") %> prohibited this usuario from being saved:</h2>
+  <div class="alert alert-danger alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 
-      <ul>
-      <% @usuario.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <% if @usuario.errors.any? %>
+
+    <% @usuario.errors.full_messages.each do |msg| %>
+    <%= msg %></br>
+    <% end %>
+    <% end %>
+  </div>
+  <% end %>   
+
+  <div class="box box-info">
+    <div class="box-header with-border">
+      <!-- <h3 class="box-title">Horizontal Form</h3> -->
     </div>
-  <% end %>
+    <!-- /.box-header -->
+    <!-- form start -->
+      <div class="box-body">
+        <div class="form-group">
+          <%= f.label :Nome_Completo %>
+          <%= f.text_field :nomecompleto, :class => "form-control" %>
+        </div> 
+        <div class="form-group">
+          <%= f.label :Data_de_Nascimento%>
+          <%= f.text_field :datascimento, :class => "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :Email%>
+          <%= f.text_field :email, :class => "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :Senha%>
+          <%= f.password_field :senha, :class => "form-control" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :Confirmação %>
+          <%= f.password_field :descconfirmasenha, :class => "form-control" %>
+        </div>
 
-  <div class="field">
-    <%= f.label :email %><br>
-    <%= f.text_field :email %>
+        
+      </div>
+      <!-- /.box-body -->
+      <div class="box-footer">
+        <button type="submit" class="btn btn-info pull-right">Salvar</button>
+      </div>
+      <!-- /.box-footer -->
   </div>
-  <div class="field">
-    <%= f.label :senha %><br>
-    <%= f.text_field :senha %>
-  </div>
-  <div class="field">
-    <%= f.label :nomecompleto %><br>
-    <%= f.text_field :nomecompleto %>
-  </div>
-  <div class="field">
-    <%= f.label :datascimento %><br>
-    <%= f.date_select :datascimento %>
-  </div>
-  <div class="field">
-    <%= f.label :ultimologin %><br>
-    <%= f.datetime_select :ultimologin %>
-  </div>
-  <div class="field">
-    <%= f.label :flagativo %><br>
-    <%= f.check_box :flagativo %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+
+  <% end %>

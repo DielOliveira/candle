@@ -1,3 +1,22 @@
-  <%= csrf_meta_tags %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= render 'shared/navigation_bar' %>
+<!DOCTYPE html>
+<html>
+
+
+	<%= javascript_include_tag "application" %>
+	<%= csrf_meta_tags %>
+	<%= render 'shared/libs' %>
+
+
+
+	<%if not usuario_logado %>
+
+	<%= yield %>
+
+	<%else%> 
+
+	<%= render 'shared/navigation_bar' %>
+
+
+	<%end%>
+
+</html>

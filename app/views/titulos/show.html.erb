@@ -1,19 +1,44 @@
-<p id="notice"><%= notice %></p>
+<% content_for :head do %>
+  Exibindo Título
+<%end%>
 
-<p>
-  <strong>Codigo:</strong>
-  <%= @titulo.codigo %>
-</p>
 
-<p>
-  <strong>Valortick:</strong>
-  <%= @titulo.valortick %>
-</p>
+	<% flash.each do |name, msg| -%>
+	<div class="alert alert-warning alert-dismissible fade in" role="alert">
+	  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	  <%= msg%>
+	</div>      
+	<% end -%>
 
-<p>
-  <strong>Flagativo:</strong>
-  <%= @titulo.flagativo %>
-</p>
+    <div class="box box-info">
+      <div class="box-header with-border">
+      </div>
 
-<%= link_to 'Edit', edit_titulo_path(@titulo) %> |
-<%= link_to 'Back', titulos_path %>
+      	<div class="box-body">
+			<p>
+			  <strong>Código:</strong>
+			  <%= @titulo.codigo %>
+			</p>
+
+			<p>
+			  <strong>Valor Por Tick:</strong>
+			  <%= @titulo.valortick %>
+			</p>
+
+			<p>
+			  <strong>Ativo:</strong>
+			  <%= iconTrueOrFalse(@titulo.flagativo) %>
+			</p>
+		</div>
+
+        <div class="box-footer">
+			<div class="btn-group pull-right">
+				<%= link_to edit_titulo_path(@titulo), :class => "btn btn-warning" do %>
+					<i class="fa fa-edit"></i> Editar
+				<% end %>
+				<%= link_to titulos_path, :class => "btn btn-danger" do %>
+					<i class="fa fa-arrow-left"></i> Voltar
+				<% end %>
+			</div>
+		</div>
+	</div>

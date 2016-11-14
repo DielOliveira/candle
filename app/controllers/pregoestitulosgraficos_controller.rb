@@ -24,11 +24,32 @@ class PregoestitulosgraficosController < ApplicationController
   # POST /pregoestitulosgraficos
   # POST /pregoestitulosgraficos.json
   def create
+
     @pregoestitulosgrafico = Pregoestitulosgrafico.new(pregoestitulosgrafico_params)
+
+    @arquivo = Arquivo.new
+
+    path = File.join(Rails.root, 
+      "public/pregoes/", 
+      params[:pregoestitulosgrafico][:arquivo_id].original_filename)
+
+    # escreve o arquivo no local designado
+    File.open(path, "wb") do |f| 
+      f.write(params[:pregoestitulosgrafico][:arquivo_id].read)
+    end
+
+    @arquivo.caminho = "public/pregoes/" + params[:pregoestitulosgrafico][:arquivo_id].original_filename # imagem["public_id"] #+ "." + imagem["format"]
+    @arquivo.nome =  params[:pregoestitulosgrafico][:arquivo_id].original_filename # imagem["public_id"] #+ "." + imagem["format"]
+
+    @arquivo.save
+
+    @pregoestitulosgrafico.arquivo_id = @arquivo.id
+
+    pregoestitulo = Pregoestitulo.find(@pregoestitulosgrafico.pregoestitulo_id)
 
     respond_to do |format|
       if @pregoestitulosgrafico.save
-        format.html { redirect_to @pregoestitulosgrafico, notice: 'Pregoestitulosgrafico was successfully created.' }
+        format.html { redirect_to pregoestitulo, notice: 'Arquivo incluído com sucesso.' }
         format.json { render :show, status: :created, location: @pregoestitulosgrafico }
       else
         format.html { render :new }
@@ -54,9 +75,15 @@ class PregoestitulosgraficosController < ApplicationController
   # DELETE /pregoestitulosgraficos/1
   # DELETE /pregoestitulosgraficos/1.json
   def destroy
+    arquivo = Arquivo.find(@pregoestitulosgrafico.arquivo_id)
+
+    File.delete(arquivo.caminho)
+
+    pregoestitulo = Pregoestitulo.find(@pregoestitulosgrafico.pregoestitulo_id)
+    
     @pregoestitulosgrafico.destroy
     respond_to do |format|
-      format.html { redirect_to pregoestitulosgraficos_url, notice: 'Pregoestitulosgrafico was successfully destroyed.' }
+      format.html { redirect_to pregoestitulo, notice: 'Arquivo excluído com sucesso.' }
       format.json { head :no_content }
     end
   end

@@ -26,6 +26,19 @@ class ArquivosController < ApplicationController
   def create
     @arquivo = Arquivo.new(arquivo_params)
 
+    path = File.join(Rails.root, 
+      "public/pregoes", 
+      params[:arquivo][:caminho].original_filename)
+
+    # escreve o arquivo no local designado
+    File.open(path, "wb") do |f| 
+      f.write(params[:arquivo][:caminho].read)
+    end
+
+    #imagem = Cloudinary::Uploader.upload(path,:resource_type => :auto)
+
+    @arquivo.caminho = "/pregoes/" + params[:arquivo][:caminho].original_filename # imagem["public_id"] #+ "." + imagem["format"]
+
     respond_to do |format|
       if @arquivo.save
         format.html { redirect_to @arquivo, notice: 'Arquivo was successfully created.' }

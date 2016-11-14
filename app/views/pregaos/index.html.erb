@@ -1,29 +1,56 @@
-<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-lg-12">
+  <% flash.each do |name, msg| -%>
+  <div class="alert alert-warning alert-dismissible fade in" role="alert">
+    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    <%= msg%>
+  </div>      
+  <% end -%>
 
-<h1>Listing Pregaos</h1>
+  <div class="box box-info">
+    <div class="box-header with-border">
+      <h3 class="box-title">Listando Pregões</h3>
+    </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Data</th>
-      <th>Flagativo</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Data Pregão</th>
+          <th>Ativo</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @pregaos.each do |pregao| %>
-      <tr>
-        <td><%= pregao.data %></td>
-        <td><%= pregao.flagativo %></td>
-        <td><%= link_to 'Show', pregao %></td>
-        <td><%= link_to 'Edit', edit_pregao_path(pregao) %></td>
-        <td><%= link_to 'Destroy', pregao, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <tbody>
+        <% @pregaos.each do |pregao| %>
+          <tr>
+            <td><%= showDate(pregao.data,false) %></td>
+            <td><%= iconTrueOrFalse(pregao.flagativo) %></td>
+            <td>
+              <div class="btn-group pull-right">
+                <%= link_to pregao, :class => "btn btn-default" do %>
+                  <i class="fa fa-list-alt"></i> Exibir
+                <% end %>
+                <%= link_to edit_pregao_path(pregao), :class => "btn btn-default" do %>
+                  <i class="fa fa-edit"></i> Editar
+                <% end %>
+                <%= link_to raw("<i class=\"fa fa-trash\"></i> Excluir"), 
+                  pregao_path(:id => pregao.id),
+                  class: "btn btn-default",
+                  method: :delete %>                  
+              </div>
+            </td>
 
-<br>
-
-<%= link_to 'New Pregao', new_pregao_path %>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <br>
+    <div class="box-footer">
+      <%= link_to new_pregao_path, :class => "btn btn-success pull-right" do %>
+      <span class="glyphicon glyphicon-file"></span> Novo
+      <% end %>      
+    </div>      
+  </div>
+</div>
+</div>

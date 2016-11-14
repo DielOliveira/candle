@@ -28,7 +28,7 @@ class TitulosController < ApplicationController
 
     respond_to do |format|
       if @titulo.save
-        format.html { redirect_to @titulo, notice: 'Titulo was successfully created.' }
+        format.html { redirect_to @titulo, notice: 'Título incluído com sucesso.' }
         format.json { render :show, status: :created, location: @titulo }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class TitulosController < ApplicationController
   def update
     respond_to do |format|
       if @titulo.update(titulo_params)
-        format.html { redirect_to @titulo, notice: 'Titulo was successfully updated.' }
+        format.html { redirect_to @titulo, notice: 'Título alterado com sucesso.' }
         format.json { render :show, status: :ok, location: @titulo }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class TitulosController < ApplicationController
   def destroy
     @titulo.destroy
     respond_to do |format|
-      format.html { redirect_to titulos_url, notice: 'Titulo was successfully destroyed.' }
+      format.html { redirect_to titulos_url, notice: 'Título excluído com sucesso.' }
       format.json { head :no_content }
     end
   end

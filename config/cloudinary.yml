@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: daoh89c0m
+  api_key: '714556293475169'
+  api_secret: sWi8EKJ__6DdTxevFniA1EWctak
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: daoh89c0m
+  api_key: '714556293475169'
+  api_secret: sWi8EKJ__6DdTxevFniA1EWctak
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: daoh89c0m
+  api_key: '714556293475169'
+  api_secret: sWi8EKJ__6DdTxevFniA1EWctak
+  enhance_image_tag: true
+  static_image_support: false
